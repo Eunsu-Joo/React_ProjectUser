@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 80px;
+}
+.article:before,
+.article:after {
+  content: "";
+  width: 5px;
+  position: absolute;
+  background-color: #7f8c8d;
+  bottom: 0;
+  z-index: -1;
+}
+.article:before {
+  left: 55%;
+  height: 25vh;
+  bottom: -100px;
+}
+.article::after {
+  right: 0;
+  bottom: -100px;
+  height: 45vh;
+  background-color: #95a5a6;
+}
+.article {
+  width: 1280px;
+  margin: 0 auto;
+  padding: 60px 0;
+  position: relative;
+}
+.title {
+  font-size: 8rem;
+  font-family: "Playfair Display", serif;
+  line-height: 0.9;
+  margin-bottom: 60px;
+  letter-spacing: -5px;
+}
+.title span {
+  display: block;
+  letter-spacing: -5px;
+}
+.title .user {
+  font-size: 11rem;
+  margin-left: 15rem;
+}
+
+.userContainer {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
