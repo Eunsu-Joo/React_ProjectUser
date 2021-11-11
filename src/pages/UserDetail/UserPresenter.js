@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import styles from "./User.module.css";
 import { useNavigate } from "react-router";
 import Loading from "components/Loading";
+import Error from "components/Error";
 export default ({ data: user, isLoading, isError }) => {
   const navigator = useNavigate();
   return (
     <section className={styles.container}>
+
       {isLoading ? (
-        <Loading />
+        isError ? <Error /> : <Loading />
       ) : (
         <>
           <article className={styles.userContainer}>
@@ -50,7 +52,7 @@ export default ({ data: user, isLoading, isError }) => {
           </article>
         </>
       )}
-      {isError && alert(isError)}
+      
     </section>
   );
 };

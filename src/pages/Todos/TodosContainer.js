@@ -7,19 +7,18 @@ export default () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
-  async function fetchUrl() {
-    try {
-      const { data } = await userApi.todos(id);
-      setData(data);
-    } catch (error) {
-      setIsError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-  useEffect(() => {
-    fetchUrl();
-  }, []);
 
+  useEffect(() => {
+    async function fetchUrl() {
+      try {
+        const { data } = await userApi.todos(id);
+        setData(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsError(error);
+      }
+    }
+   fetchUrl();
+  }, []);
   return <TodosPresenter data={data} isLoading={isLoading} isError={isError} />;
 };

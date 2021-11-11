@@ -22,7 +22,7 @@ const Error = styled.section`
 export default () => {
   return (
     <Error>
-      <img src={process.env.PUBLIC_URL + "images/error.png"} alt="d" />
+      <img src={process.env.PUBLIC_URL + "/images/error.png"} alt="d" />
       <p>
         Error Code : <span>404</span>
       </p>

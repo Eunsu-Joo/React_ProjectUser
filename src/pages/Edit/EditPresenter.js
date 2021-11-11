@@ -67,7 +67,7 @@ export default ({ data, onUpdate }) => {
       }),
     },
   };
-  const { name, username, phone, email, address, website } = validator;
+  const { name, username, phone, email, website } = validator;
   const onSubmit = (data) => {
     data.username === undefined
       ? onUpdate({
@@ -129,7 +129,7 @@ export default ({ data, onUpdate }) => {
             {errors.website && <p>{errors.website.message}</p>}
           </div>
           <div className={styles.btns}>
-            <DeleteBtn />
+            <DeleteBtn id={id} />
             <button className="btn">Revise</button>
           </div>
         </article>

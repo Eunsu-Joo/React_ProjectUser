@@ -9,9 +9,9 @@ export default ({ data, isLoading, isError }) => {
   return (
     <>
       {isLoading ? (
-        <>
-          <Loading />
-        </>
+       
+         isError ? <Error /> :  <Loading />
+       
       ) : (
         <section className={styles.container}>
           <article className={styles.article}>

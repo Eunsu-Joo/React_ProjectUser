@@ -20,10 +20,9 @@ function App() {
     try {
       const { data } = await userApi.users();
       setData(data);
+      setIsLoading(false);
     } catch (error) {
       setIsError(error);
-    } finally {
-      setIsLoading(false);
     }
   }
   useEffect(() => fetchUrl(), []);
@@ -31,7 +30,7 @@ function App() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        isError ? <Error /> : <Loading />
       ) : (
         <>
           <GlobalStyles />

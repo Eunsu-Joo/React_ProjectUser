@@ -48,6 +48,7 @@ color: #555;
         color: #fff;
         outline: 0;
         transition: 0;
+        cursor: default;
             }
         }
     }

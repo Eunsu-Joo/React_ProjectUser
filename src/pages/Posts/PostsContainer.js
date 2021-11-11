@@ -13,10 +13,9 @@ export default () => {
       try {
         const { data } = await userApi.posts(id);
         setData(data);
+        setIsLoading(false);
       } catch (error) {
         setIsError(error);
-      } finally {
-        setIsLoading(false);
       }
     }
     fetchUrl();
