@@ -7,14 +7,12 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.24.0",
-    "jquery": "^3.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.19.3",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
-    "react-slick": "^0.28.1",
-    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
     "web-vitals": "^1.0.1"
@@ -29,6 +27,19 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.js",
+          "**/*.jsx"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off",
+          "react-hooks/exhaustive-deps": "off",
+          "jsx-a11y/alt-text": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -42,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^19.0.0"
   }
 }

@@ -74,10 +74,25 @@ input:focus {
   margin-bottom: 1rem;
   width: 430px;
   display: flex;
+  flex-wrap: wrap;
 }
 .inputBox button {
   margin-left: 1rem;
 }
+.inputBox p {
+  width: 100%;
+  padding-left: 8px;
+  font-size: 14px;
+  padding-top: 4px;
+  color: #eb2f06;
+  font-weight: 700;
+}
+.inputBox p::before {
+  content: "❌";
+  font-size: 10px;
+  padding-right: 6px;
+}
+
 .btns {
   margin-top: 60px;
 }

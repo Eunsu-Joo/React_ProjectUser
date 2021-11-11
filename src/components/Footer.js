@@ -25,7 +25,7 @@ const MainFooter = styled.footer`
     font-size: 1.1rem;
   }
 `;
-export default function Footer() {
+export default () => {
   return (
     <MainFooter>
       <div className="container">
@@ -40,4 +40,4 @@ export default function Footer() {
       </div>
     </MainFooter>
   );
-}
+};

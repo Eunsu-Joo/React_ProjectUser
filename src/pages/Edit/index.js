@@ -1,3 +1,3 @@
-import EditPresenter from "./EditPresenter";
+import EditContainer from "./EditContainer";
 
-export default EditPresenter;
+export default EditContainer;

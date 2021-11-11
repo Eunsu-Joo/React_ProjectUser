@@ -49,7 +49,7 @@ const User = styled.div`
   }
 `;
 
-export default function UserItem({ data }) {
+export default ({ data }) => {
   const { name, username, email, company, website, phone, id } = data;
   const navigator = useNavigate();
   return (
@@ -67,4 +67,4 @@ export default function UserItem({ data }) {
       <p>Website : {website}</p>
     </User>
   );
-}
+};

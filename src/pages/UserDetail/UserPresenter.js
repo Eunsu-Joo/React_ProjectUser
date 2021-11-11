@@ -2,12 +2,13 @@ import { DeleteBtn, ReviseBtn } from "components/Btn";
 import React, { useState } from "react";
 import styles from "./User.module.css";
 import { useNavigate } from "react-router";
-export default function UserPresenter({ data: user, isLoading, isError }) {
+import Loading from "components/Loading";
+export default ({ data: user, isLoading, isError }) => {
   const navigator = useNavigate();
   return (
     <section className={styles.container}>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <Loading />
       ) : (
         <>
           <article className={styles.userContainer}>
@@ -52,4 +53,4 @@ export default function UserPresenter({ data: user, isLoading, isError }) {
       {isError && alert(isError)}
     </section>
   );
-}
+};

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { TiUserOutline } from "react-icons/ti";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { matchUser } from "common/common";
 const MainHeader = styled.header`
   width: 100%;
   height: 60px;
@@ -48,14 +49,15 @@ const greeting = {
   marginLeft: "0.5em",
 };
 
-export default function Header({ data }) {
+export default ({ data }) => {
   const { pathname } = useLocation();
   const navigator = useNavigate();
   const id = parseInt(pathname.slice(-1));
   const changeUrl = (item) => {
     return navigator(`${item}/${id}`, { replace: true });
   };
-  const currentuser = data.find((user) => user.id === id);
+  const currentuser = matchUser(data, id);
+
   return (
     <MainHeader>
       <Nav className="container">
@@ -100,4 +102,4 @@ export default function Header({ data }) {
       </Nav>
     </MainHeader>
   );
-}
+};

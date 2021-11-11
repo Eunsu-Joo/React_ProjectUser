@@ -1,7 +1,7 @@
 import { userApi } from "api";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import UserPresenter from "./UserPresenter";
+import PostsPresenter from "./PostsPresenter";
 
 export default () => {
   const { id } = useParams();
@@ -11,7 +11,7 @@ export default () => {
   useEffect(() => {
     async function fetchUrl() {
       try {
-        const { data } = await userApi.user(id);
+        const { data } = await userApi.posts(id);
         setData(data);
       } catch (error) {
         setIsError(error);
@@ -20,6 +20,6 @@ export default () => {
       }
     }
     fetchUrl();
-  }, [id]);
-  return <UserPresenter data={data} isLoading={isLoading} isError={isError} />;
+  }, []);
+  return <PostsPresenter data={data} isLoading={isLoading} isError={isError} />;
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import UserItem from "components/UserItem";
 import styles from "./Home.module.css";
-export default function HomePresenter({ data, isError }) {
+export default ({ data, isError }) => {
   return (
     <>
       <section className={styles.container}>
@@ -18,7 +18,6 @@ export default function HomePresenter({ data, isError }) {
           </div>
         </article>
       </section>
-      {isError && alert(isError)}
     </>
   );
-}
+};
