@@ -52,12 +52,14 @@ const greeting = {
 export default ({ data }) => {
   const { pathname } = useLocation();
   const navigator = useNavigate();
-  const id = parseInt(pathname.slice(-1));
+  let id = parseInt(pathname.slice(-1));
+  if (id == 0) {
+    id = id + 10;
+  }
   const changeUrl = (item) => {
     return navigator(`${item}/${id}`, { replace: true });
   };
-  const currentuser = matchUser(data, id);
-
+  const { username } = matchUser(data, id);
   return (
     <MainHeader>
       <Nav className="container">
@@ -91,7 +93,7 @@ export default ({ data }) => {
             </Gnb>
             <User>
               <TiUserOutline style={icon} />
-              Welcome <span style={greeting}>{currentuser.username}</span>
+              Welcome <span style={greeting}>{username}</span>
             </User>
           </>
         ) : (

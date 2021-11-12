@@ -8,10 +8,12 @@ import UserDetail from "pages/UserDetail";
 import Edit from "pages/Edit";
 import Todos from "pages/Todos";
 import Posts from "pages/Posts";
+import Albums from "pages/Albums";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import Error from "./Error";
-import Modal from "./Modal";
+import { Modal } from "./Modal";
+
 function App() {
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(null);
@@ -30,7 +32,11 @@ function App() {
   return (
     <>
       {isLoading ? (
-        isError ? <Error /> : <Loading />
+        isError ? (
+          <Error />
+        ) : (
+          <Loading />
+        )
       ) : (
         <>
           <GlobalStyles />
@@ -45,8 +51,9 @@ function App() {
             <Route path="/edit" element={<Edit data={data} />} />
             <Route path="/edit/:id" element={<Edit data={data} />} />
             <Route path="/modal" element={<Modal />} />
-            <Route path="/todos/:id" element={<Todos />} />
             <Route path="/posts/:id" element={<Posts />} />
+            <Route path="/todos/:id" element={<Todos />} />
+            <Route path="albums/:id" element={<Albums />} />
           </Routes>
           <Footer />
         </>

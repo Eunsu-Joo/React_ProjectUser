@@ -21,6 +21,21 @@ const PostItem = styled.div`
       font-size: 7rem;
     }
   }
+  .inputBox {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    input {
+      background-color: inherit;
+      border-bottom: 1px solid #636e72;
+      border-radius: 0;
+      padding: 0;
+      width: 20%;
+    }
+  }
   .contents {
     width: 70%;
     padding: 2rem 0rem 2rem 2rem;
@@ -41,19 +56,37 @@ const PostItem = styled.div`
 
 export default ({ post }) => {
   const { id, title, body } = post;
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [isSend, setIsSend] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const useInput = (initialValues) => {
+    const [values, setValues] = useState(initialValues);
+    const onChange = (event) => {
+      const { name, value } = event.target;
+      setValues({ ...values, [name]: value });
+    };
+    const onReset = () => setValues(initialValues);
+    return [values, onChange, onReset];
+  };
+  const [comments, onChange, onReset] = useInput({
+    name: "",
+    email: "",
+    body: "",
+  });
   const sendRequest = useCallback(async () => {
-    setIsCheck(!isCheck)
-    if (isSend) return
+    setIsCheck(!isCheck);
+    if (isSend) return;
     setIsSend(true);
     await userApi.comments(id).then((res) => setData(res.data));
     setIsLoading(false);
   });
+  const onUpdate = () => {
+    setData([...data, { ...comments, key: comments.name }]);
+    onReset();
+  };
   useEffect(() => {
-    return sendRequest
+    return sendRequest;
   }, []);
   return (
     <PostItem>
@@ -63,7 +96,33 @@ export default ({ post }) => {
       <div className="contents">
         <h4>{title}</h4>
         <p>{body}</p>
-        <span className="comment" onClick={sendRequest} >
+        <div className="inputBox">
+          <input
+            type="text"
+            placeholder="name"
+            name="name"
+            onChange={onChange}
+            value={comments.name}
+          />
+          <input
+            type="text"
+            placeholder="email"
+            name="email"
+            onChange={onChange}
+            value={comments.email}
+          />
+          <input
+            type="text"
+            placeholder="comment"
+            name="body"
+            onChange={onChange}
+            value={comments.body}
+          />
+          <button className="btn" onClick={onUpdate}>
+            Comment
+          </button>
+        </div>
+        <span className="comment" onClick={sendRequest}>
           Show Comments
         </span>
         {isLoading
@@ -80,7 +139,7 @@ export default ({ post }) => {
   );
 };
 
-/** 1. useRef(true) => 랜더링에 안걸리게 하려고 
+/** 1. useRef(true) => 랜더링에 안걸리게 하려고
  *  2. useEffect 로 isMount false로 바꿈.
- *  3. 
+ *  3.
  */

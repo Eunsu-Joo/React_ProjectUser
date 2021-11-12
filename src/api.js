@@ -9,12 +9,13 @@ export const userApi = {
   user: (userId) => api.get(`users/${userId}`),
   posts: (userId) => api.get(`posts?userId=${userId}`),
   todos: (userId) => api.get(`todos?userId=${userId}`),
-  albums: (userId) => api.get(`albums/${userId}`),
+  albums: (userId) => api.get(`albums?userId=${userId}`),
   comments: (postId) => api.get(`comments?postId=${postId}`),
-  photos: (albumId) => api.get(`albums/${albumId}/photos`),
+  photos: (albumId) => api.get(`photos?albumId=${albumId}`),
 };
 
 export const updateApi = (id, data) => {
+  console.log(id, data);
   if (id === undefined) {
     axios({
       url: `https://jsonplaceholder.typicode.com/users`,

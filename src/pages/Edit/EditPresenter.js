@@ -1,16 +1,19 @@
 import { matchUser } from "common/common";
-import { DeleteBtn } from "components/Btn";
+import { CheckIdBtn } from "components/Btn";
 import { useParams } from "react-router";
 import styles from "./Edit.module.css";
 import { useForm } from "react-hook-form";
+import { useEffect, useRef } from "react/cjs/react.development";
 export default ({ data, onUpdate }) => {
   const { id } = useParams();
-  const currentUsername = data.find((user) => user.id === parseInt(id));
+  const { username: currentUsername } = matchUser(data, id);
+  const usernameArray = data.map((user) => user.username);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    getValues,
   } = useForm();
   const regExp = {
     korean: /^[가-힣]+$/,
@@ -67,16 +70,14 @@ export default ({ data, onUpdate }) => {
       }),
     },
   };
+
   const { name, username, phone, email, website } = validator;
   const onSubmit = (data) => {
     data.username === undefined
       ? onUpdate({
-          data: { ...data, username: currentUsername.username },
-          id,
+          data: { ...data, username: currentUsername },
         })
-      : onUpdate({
-          data,
-        });
+      : onUpdate(data);
     reset();
   };
 
@@ -107,13 +108,15 @@ export default ({ data, onUpdate }) => {
           <div className={styles.inputBox}>
             <input
               type="text"
-              placeholder={id ? currentUsername.username : "user Name"}
+              placeholder={id ? currentUsername : "user Name"}
               disabled={id}
               {...username}
             />
-            <button className="btn" disabled={id}>
-              check Id
-            </button>
+            <CheckIdBtn
+              value={getValues("username")}
+              disabled={currentUsername}
+              data={usernameArray}
+            />
             {errors.username && <p>{errors.username.message}</p>}
           </div>
           <div className={styles.inputBox}>
@@ -129,8 +132,7 @@ export default ({ data, onUpdate }) => {
             {errors.website && <p>{errors.website.message}</p>}
           </div>
           <div className={styles.btns}>
-            <DeleteBtn id={id} />
-            <button className="btn">Revise</button>
+            <button className="btn">{id ? "Revise" : "Enroll"}</button>
           </div>
         </article>
       </form>
