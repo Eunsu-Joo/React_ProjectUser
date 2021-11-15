@@ -49,15 +49,12 @@
 ## Necessary Api
 
 - users
-
-  -user
-  -posts
-
+  - user
+  - posts
   - comments
-    -todos
-    -albums
+    - todos
+    - albums
   - photos
-
 - update
   - revise
   - create
