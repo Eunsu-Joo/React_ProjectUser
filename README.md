@@ -2,64 +2,63 @@
 
 ## Directory Config
 
+### common
+
+-common.js => global common JS
+
 ### components
 
-- App.js
-- Header.js
-- Footer.js
-- UserItem.js
-- ImageBox.js
-- modal.js
-- GlobalStyles.js
+- App.js => Common owner component / AJAX networking / data State
+- GlobalStyles.js => Global Css
+- Header.js => Header Component
+- Footer.js => Footer Component
+- Loading.js / Error.js => Loading, Error component
+- UserItem.js => UserDetail Presenter Component
+- PostsItem.js => PostsPresenter Component
+- CommentItem.js => PostItem.js Component
+- TodoItem.js => TodoPresenter.js Component
+- AlbumItem.js => AlbumPresenter.js Component
+- Modal.js => DeleteModal / UpdateModal / AlbumModal
+- Btns.js => DeleteBtn / CheckIdBtn
 
 #### Pages
 
 - Home
 
-  - index.js
-  - HomePresenter.js
-  - HomeStyled.js
+  - index.js => import / export
+    - HomeContainer.js => Ajax networking / parent
+  - HomePresenter.js => Element / children
+  - Home.module.css => css
 
-- User
-
-  - index.js
-  - UserPresenter.js
-  - UserStyled.js
-
+- UserDetail
 - Edit
-
-  - index.js
-  - EditPresenter.js
-  - EditStyled.js
-
 - Posts
-
-  - index.js
-  - PostsPresenter.js
-  - PostsStyled.js
-
 - Todos
-
-  - index.js
-  - TodosPresenter.js
-  - TodosStyled.js
-
 - Albums
-  - index.js
-  - AlbumsPresenter.js
-  - AlbumsStyled.js
 
-### Hooks
+### hooks
 
-- useInput.js
+- useInput.js => input Hooks custom JS
 
-### Api
+### Ect
 
-- api.js
+- api.js => axios config
+- index.js
+- jsconfig.js => change src path
 
-## Api Verbs
+## Necessary Api
 
-- [] user data (default)
-- [] posts, albums, todos
-- [] update
-- [] revise
+- users
+
+  -user
+  -posts
+
+  - comments
+    -todos
+    -albums
+  - photos
+
+- update
+  - revise
+  - create
+- delete
