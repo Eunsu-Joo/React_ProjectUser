@@ -51,10 +51,10 @@
 - users
   - user
   - posts
-  - comments
-    - todos
-    - albums
-  - photos
+    - comments
+  - todos
+  - albums
+    - photos
 - update
   - revise
   - create
