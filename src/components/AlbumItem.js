@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react/cjs/react.development";
+import { useState } from "react/cjs/react.development";
 import styled from "styled-components";
 import { userApi } from "api";
+import { AlbumModal } from "./Modal";
+import Error from "./Error";
 import { useCallback } from "react";
-import { useParams } from "react-router";
-import { Modal } from "./Modal";
 const AlbumItem = styled.div`
   cursor: pointer;
   position: relative;
@@ -45,44 +45,51 @@ const AlbumItem = styled.div`
 `;
 
 export default ({ data }) => {
-  const { userId, title } = data;
-  const [isCheck, setIsCheck] = useState(true);
+  const { userId, title, id } = data;
+  const [isVisible, setIsVisible] = useState(false);
   const [photoData, setPhotoData] = useState(null);
   const [isSend, setIsSend] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
+  const [isError, setIsError] = useState(null);
+
   const sendRequest = useCallback(async () => {
+    setIsVisible(true);
     if (isSend) return;
     setIsSend(true);
-    const { data } = await userApi.photos(id);
-    setPhotoData(data);
-    setIsLoading(false);
-  });
-  useEffect(() => {
-    return sendRequest;
-  }, []);
+    try {
+      const { data } = await userApi.photos(id);
+      setPhotoData(data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsError(error);
+    }
+  }, [photoData]);
+
   return (
     <>
       <AlbumItem onClick={sendRequest}>
         <div className="imgBox">
           <img
-            src={
-              process.env.PUBLIC_URL +
-              `/images/photo${Math.ceil(Math.random() * 10)}.png`
-            }
+            src={process.env.PUBLIC_URL + `/images/photo${userId}.png`}
             alt=""
           />
         </div>
         <div className="desc">
           <h3>
-            UserID : <span>{userId}</span>{" "}
+            UserID :<span>{userId}</span>
           </h3>
           <h4>{title}</h4>
         </div>
       </AlbumItem>
       {isSend && (
-        <Modal visible={isCheck} data={photoData} isLoading={isLoading} />
+        <AlbumModal
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          data={photoData}
+          isLoading={isLoading}
+        />
       )}
+      {isError && <Error />}
     </>
   );
 };

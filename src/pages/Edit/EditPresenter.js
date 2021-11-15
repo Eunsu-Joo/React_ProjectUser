@@ -3,7 +3,6 @@ import { CheckIdBtn } from "components/Btn";
 import { useParams } from "react-router";
 import styles from "./Edit.module.css";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef } from "react/cjs/react.development";
 export default ({ data, onUpdate }) => {
   const { id } = useParams();
   const { username: currentUsername } = matchUser(data, id);
@@ -13,7 +12,7 @@ export default ({ data, onUpdate }) => {
     handleSubmit,
     reset,
     formState: { errors },
-    getValues,
+    setValue,
   } = useForm();
   const regExp = {
     korean: /^[가-힣]+$/,
@@ -25,44 +24,74 @@ export default ({ data, onUpdate }) => {
   const validator = {
     name: {
       ...register("name", {
-        required: { value: true, message: "Please write your name" },
-        pattern: { value: regExp.korean, message: "Input Korean Form" },
-        maxLength: { value: 10, message: "Less than 10 characters" },
+        required: {
+          value: true,
+          message: "Please write your name",
+        },
+        pattern: {
+          value: regExp.korean,
+          message: "Input Korean Form",
+        },
+        maxLength: {
+          value: 10,
+          message: "Less than 10 characters",
+        },
       }),
     },
     username: {
       ...register("username", {
         required: {
-          value: currentUsername ? false : true,
+          value: id ? false : true,
           message: "Please write username",
         },
         pattern: {
           value: regExp.engNumber,
           message: "Input English & Number Form",
         },
-        maxLength: { value: 20, message: "Less than 20 characters" },
+        maxLength: {
+          value: 20,
+          message: "Less than 20 characters",
+        },
       }),
     },
     phone: {
       ...register("phone", {
-        required: { value: true, message: "Please write phone number" },
-        pattern: { value: regExp.phone, message: "Input phone Form" },
+        required: {
+          value: true,
+          message: "Please write phone number",
+        },
+        pattern: {
+          value: regExp.phone,
+          message: "Input phone Form",
+        },
       }),
-      maxLength: { value: 12, message: "Less than 12 characters" },
+      maxLength: {
+        value: 12,
+        message: "Less than 12 characters",
+      },
     },
     email: {
       ...register("email", {
-        required: { value: true, message: "Please write email address" },
+        required: {
+          value: true,
+          message: "Please write email address",
+        },
         pattern: {
           value: regExp.email,
           message: "Input email form",
         },
-        maxLength: { value: 50, message: "Less than 20 characters" },
+        maxLength: {
+          value: 50,
+          message: "Less than 20 characters",
+        },
       }),
     },
     website: {
       ...register("website", {
-        required: { value: true, message: "Please write your website" },
+        required: {
+          value: true,
+          message: "Please write your website",
+        },
         pattern: {
           value: regExp.url,
           message: "Input Url form",
@@ -70,17 +99,11 @@ export default ({ data, onUpdate }) => {
       }),
     },
   };
-
   const { name, username, phone, email, website } = validator;
   const onSubmit = (data) => {
-    data.username === undefined
-      ? onUpdate({
-          data: { ...data, username: currentUsername },
-        })
-      : onUpdate(data);
+    onUpdate(data);
     reset();
   };
-
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -98,11 +121,11 @@ export default ({ data, onUpdate }) => {
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s,
             </p>
-            <span>You can subscribe us </span>
+            <span>You can subscribe us</span>
           </div>
           <h3>Enroll / Revise</h3>
           <div className={styles.inputBox}>
-            <input type="text" placeholder="Name" {...name} />
+            <input type="text" placeholder="Name" {...name} />{" "}
             {errors.name && <p>{errors.name.message}</p>}
           </div>
           <div className={styles.inputBox}>
@@ -112,23 +135,19 @@ export default ({ data, onUpdate }) => {
               disabled={id}
               {...username}
             />
-            <CheckIdBtn
-              value={getValues("username")}
-              disabled={currentUsername}
-              data={usernameArray}
-            />
+            <CheckIdBtn disabled={currentUsername} data={usernameArray} />{" "}
             {errors.username && <p>{errors.username.message}</p>}
           </div>
           <div className={styles.inputBox}>
-            <input type="text" placeholder="Phone" {...phone} />
+            <input type="text" placeholder="Phone" {...phone} />{" "}
             {errors.phone && <p>{errors.phone.message}</p>}
           </div>{" "}
           <div className={styles.inputBox}>
-            <input type="text" placeholder="Email" {...email} />
+            <input type="text" placeholder="Email" {...email} />{" "}
             {errors.email && <p>{errors.email.message}</p>}
           </div>{" "}
           <div className={styles.inputBox}>
-            <input type="text" placeholder="Website" {...website} />
+            <input type="text" placeholder="Website" {...website} />{" "}
             {errors.website && <p>{errors.website.message}</p>}
           </div>
           <div className={styles.btns}>

@@ -1,7 +1,8 @@
 import { deleteApi } from "api";
 import { useState } from "react";
+import Error from "./Error";
 
-import { Modal } from "./Modal";
+import { DeleteModal } from "./Modal";
 const style = {
   marginRight: "24px",
 };
@@ -10,7 +11,6 @@ export const DeleteBtn = ({ id }) => {
   const [result, setResult] = useState(false);
   const [isError, setIsError] = useState(null);
   const [isSend, setIsSend] = useState(false);
-
   const sandRequest = async () => {
     if (isSend && result) {
       alert("이미 처리 되었습니다.");
@@ -26,14 +26,14 @@ export const DeleteBtn = ({ id }) => {
     }
   };
 
-  // useEffect(() => sandRequest, []);
   return (
     <>
+      {" "}
       <button className="btn" onClick={sandRequest} style={style}>
-        DELETE
+        {" "}
+        DELETE{" "}
       </button>
-      {isError && alert("error! : 콘솔창을 확인해주세요")}
-      {result && <Modal visible={result} type="delete" />}
+      {isError && <Error />} {result && <DeleteModal />}
     </>
   );
 };
@@ -42,7 +42,7 @@ export const CheckIdBtn = ({ disabled, data, value }) => {
   const [isCheck, setIsCheck] = useState(true);
   const handleCheck = () => {
     if (isCheck) {
-      data.some((username) => username === value)
+      data.some((username) => (username = value))
         ? console.log("correct")
         : console.log("incorrect");
     }

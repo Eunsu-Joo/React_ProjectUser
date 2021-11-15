@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
-import { Children } from "react";
 import { useState } from "react/cjs/react.development";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import PhotoItem from "./PhotoItem";
 const ModalContainer = styled.div`
   position: fixed;
@@ -62,30 +61,50 @@ const Album = styled.div`
   }
 `;
 
-export const Modal = ({ visible, type, data, isLoading }) => {
+export const DeleteModal = () => {
+  const [isVisible, setIsVisible] = useState(true);
   const navigator = useNavigate();
-  const [isVisible, setIsVisible] = useState(visible);
-  const onCloseHome = () => {
+  const onClose = () => {
     setIsVisible(!isVisible);
     navigator("/", { replace: true });
   };
-  const onClose = () => {
-    setIsVisible(!isVisible);
-  };
   return (
     <ModalContainer isVisible={isVisible}>
-      {type == "alert" ? (
-        <Alert>
-          <GrClose style={iconStyle} onClick={onClose} />
-          <p>Thank you . Success Delete!</p>
-        </Alert>
-      ) : isLoading ? (
-        <h1>Loading ... </h1>
+      <Alert>
+        <GrClose style={iconStyle} onClick={onClose} />
+        <p>Thank you . Success Delete!</p>
+      </Alert>
+    </ModalContainer>
+  );
+};
+
+export const UpdateModal = (type) => {
+  const [isVisible, setIsVisible] = useState(true);
+  console.log(type);
+  return (
+    <ModalContainer isVisible={isVisible}>
+      <Alert>
+        <GrClose style={iconStyle} onClick={() => setIsVisible(!isVisible)} />
+        <p>
+          {type === "update"
+            ? "Thank you! Success SIgn In!"
+            : "Thank you! Success Revise your information"}
+        </p>
+      </Alert>
+    </ModalContainer>
+  );
+};
+export const AlbumModal = ({ data, isVisible, setIsVisible, isLoading }) => {
+  return (
+    <ModalContainer isVisible={isVisible}>
+      {isLoading ? (
+        <p>Loading..</p>
       ) : (
         <Album>
-          <GrClose style={iconStyle} onClick={onClose} />
-          <h3>Photos</h3>
+          <GrClose style={iconStyle} onClick={() => setIsVisible(!isVisible)} />
+          <h3>Photos</h3>{" "}
           <div className="imgContainer">
+            {" "}
             {data.map((photo) => (
               <PhotoItem data={photo} key={photo.id} />
             ))}

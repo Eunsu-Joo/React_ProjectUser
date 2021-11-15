@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MainFooter = styled.footer`
+const Footer = styled.footer`
   width: 100%;
   height: 120px;
 
@@ -27,7 +27,7 @@ const MainFooter = styled.footer`
 `;
 export default () => {
   return (
-    <MainFooter>
+    <Footer>
       <div className="container">
         <div className="text">
           <ul>
@@ -38,6 +38,6 @@ export default () => {
           <p>You can get some information in our sites</p>
         </div>
       </div>
-    </MainFooter>
+    </Footer>
   );
 };

@@ -2,12 +2,15 @@ import Error from "components/Error";
 import Loading from "components/Loading";
 import PostItem from "components/PostItem";
 import styles from "./Posts.module.css";
-
 export default ({ data, isLoading, isError }) => {
-    return (
+  return (
     <>
       {isLoading ? (
-        isError ? <Error /> :<Loading />
+        isError ? (
+          <Error />
+        ) : (
+          <Loading />
+        )
       ) : (
         <section className={styles.container}>
           <article className={styles.article}>

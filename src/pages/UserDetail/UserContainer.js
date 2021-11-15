@@ -2,7 +2,7 @@ import { userApi } from "api";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import UserPresenter from "./UserPresenter";
-import Error from "components/Error";
+
 export default () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -17,10 +17,15 @@ export default () => {
         setIsLoading(false);
       } catch (error) {
         setIsError(error);
-      } 
+      }
     }
     fetchUrl();
   }, []);
- 
-  return <> <UserPresenter data={data} isLoading={isLoading} isError={isError} /></>;
+
+  return (
+    <>
+      {" "}
+      <UserPresenter data={data} isLoading={isLoading} isError={isError} />
+    </>
+  );
 };

@@ -53,7 +53,7 @@ export default ({ data }) => {
   const { pathname } = useLocation();
   const navigator = useNavigate();
   let id = parseInt(pathname.slice(-1));
-  if (id == 0) {
+  if (id === 0) {
     id = id + 10;
   }
   const changeUrl = (item) => {

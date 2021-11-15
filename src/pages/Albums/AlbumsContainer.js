@@ -7,7 +7,6 @@ export default () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
-
   useEffect(() => {
     async function fetchUrl() {
       try {

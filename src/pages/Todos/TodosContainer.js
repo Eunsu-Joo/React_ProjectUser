@@ -7,7 +7,6 @@ export default () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
-
   useEffect(() => {
     async function fetchUrl() {
       try {
@@ -18,7 +17,7 @@ export default () => {
         setIsError(error);
       }
     }
-   fetchUrl();
+    fetchUrl();
   }, []);
   return <TodosPresenter data={data} isLoading={isLoading} isError={isError} />;
 };

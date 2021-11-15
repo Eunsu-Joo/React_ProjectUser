@@ -1,8 +1,9 @@
 import { userApi } from "api";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import CommentItem from "./CommentItem";
-
+import { useInput } from "hooks/useInput";
+import Error from "./Error";
 const PostItem = styled.div`
   margin-bottom: 1rem;
   background-color: #e9e9e9;
@@ -56,86 +57,86 @@ const PostItem = styled.div`
 
 export default ({ post }) => {
   const { id, title, body } = post;
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [isSend, setIsSend] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const useInput = (initialValues) => {
-    const [values, setValues] = useState(initialValues);
-    const onChange = (event) => {
-      const { name, value } = event.target;
-      setValues({ ...values, [name]: value });
-    };
-    const onReset = () => setValues(initialValues);
-    return [values, onChange, onReset];
-  };
+  const [isError, setIsError] = useState(null);
+  let nextId = useRef(6);
   const [comments, onChange, onReset] = useInput({
     name: "",
     email: "",
     body: "",
   });
+
   const sendRequest = useCallback(async () => {
     setIsCheck(!isCheck);
     if (isSend) return;
-    setIsSend(true);
-    await userApi.comments(id).then((res) => setData(res.data));
-    setIsLoading(false);
-  });
+    try {
+      await userApi.comments(id).then((res) => setData(res.data));
+      setIsLoading(false);
+      setIsSend(true);
+    } catch (error) {
+      setIsError(error);
+    }
+  }, [data]);
   const onUpdate = () => {
-    setData([...data, { ...comments, key: comments.name }]);
+    setData([...data, { ...comments, id: nextId.current }]);
     onReset();
+    nextId.current += 1;
   };
-  useEffect(() => {
-    return sendRequest;
-  }, []);
+
   return (
-    <PostItem>
-      <h3>
-        Post Number / <span>{id}</span>{" "}
-      </h3>
-      <div className="contents">
-        <h4>{title}</h4>
-        <p>{body}</p>
-        <div className="inputBox">
-          <input
-            type="text"
-            placeholder="name"
-            name="name"
-            onChange={onChange}
-            value={comments.name}
-          />
-          <input
-            type="text"
-            placeholder="email"
-            name="email"
-            onChange={onChange}
-            value={comments.email}
-          />
-          <input
-            type="text"
-            placeholder="comment"
-            name="body"
-            onChange={onChange}
-            value={comments.body}
-          />
-          <button className="btn" onClick={onUpdate}>
-            Comment
-          </button>
+    <>
+      <PostItem>
+        <h3>
+          Post Number / <span>{id}</span>{" "}
+        </h3>
+        <div className="contents">
+          <h4>{title}</h4>
+          <p>{body}</p>
+          <div className="inputBox">
+            <input
+              type="text"
+              placeholder="name"
+              name="name"
+              onChange={onChange}
+              value={comments.name}
+            />
+            <input
+              type="text"
+              placeholder="email"
+              name="email"
+              onChange={onChange}
+              value={comments.email}
+            />
+            <input
+              type="text"
+              placeholder="comment"
+              name="body"
+              onChange={onChange}
+              value={comments.body}
+            />
+            <button className="btn" onClick={onUpdate} disabled={!data}>
+              Comment
+            </button>
+          </div>
+          <span className="comment" onClick={sendRequest}>
+            Show Comments
+          </span>
+          {isLoading
+            ? null
+            : data.map((comment) => (
+                <CommentItem
+                  comment={comment}
+                  key={comment.id}
+                  isCheck={isCheck}
+                />
+              ))}
         </div>
-        <span className="comment" onClick={sendRequest}>
-          Show Comments
-        </span>
-        {isLoading
-          ? null
-          : data.map((comment) => (
-              <CommentItem
-                comment={comment}
-                key={comment.id}
-                isCheck={isCheck}
-              />
-            ))}
-      </div>
-    </PostItem>
+      </PostItem>
+      {isError && <Error />}
+    </>
   );
 };
 

@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Error = styled.section`
   width: 100%;
   height: calc(100vh - 180px);
-  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;

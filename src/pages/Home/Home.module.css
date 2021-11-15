@@ -53,3 +53,22 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+.searchBar {
+  width: 60%;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchBar input {
+  width: 570px;
+}
+.noResult {
+  border: 1px solid black;
+  width: 1280px;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+}

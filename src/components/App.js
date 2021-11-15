@@ -12,8 +12,6 @@ import Albums from "pages/Albums";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import Error from "./Error";
-import { Modal } from "./Modal";
-
 function App() {
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(null);
@@ -28,7 +26,6 @@ function App() {
     }
   }
   useEffect(() => fetchUrl(), []);
-
   return (
     <>
       {isLoading ? (
@@ -50,7 +47,6 @@ function App() {
             <Route path="user/:id" element={<UserDetail />} />
             <Route path="/edit" element={<Edit data={data} />} />
             <Route path="/edit/:id" element={<Edit data={data} />} />
-            <Route path="/modal" element={<Modal />} />
             <Route path="/posts/:id" element={<Posts />} />
             <Route path="/todos/:id" element={<Todos />} />
             <Route path="albums/:id" element={<Albums />} />
