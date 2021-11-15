@@ -12,8 +12,22 @@ export default ({ data, onUpdate }) => {
     handleSubmit,
     reset,
     formState: { errors },
-    setValue,
-  } = useForm();
+  } = useForm({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      name: "",
+      username: currentUsername ? currentUsername : "",
+      phone: "",
+      email: "",
+      website: "",
+    },
+    resolver: undefined,
+    context: undefined,
+    criteriaMode: "firstError",
+    shouldFocusError: true,
+    shouldUnregister: true,
+  });
   const regExp = {
     korean: /^[가-힣]+$/,
     email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -104,6 +118,7 @@ export default ({ data, onUpdate }) => {
     onUpdate(data);
     reset();
   };
+
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>

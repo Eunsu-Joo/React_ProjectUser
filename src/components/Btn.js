@@ -1,5 +1,6 @@
 import { deleteApi } from "api";
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
 import Error from "./Error";
 
 import { DeleteModal } from "./Modal";
@@ -10,13 +11,7 @@ const style = {
 export const DeleteBtn = ({ id }) => {
   const [result, setResult] = useState(false);
   const [isError, setIsError] = useState(null);
-  const [isSend, setIsSend] = useState(false);
   const sandRequest = async () => {
-    if (isSend && result) {
-      alert("이미 처리 되었습니다.");
-      return false;
-    }
-    setIsSend(true);
     try {
       await deleteApi(id).then(() => {
         setResult(true);
@@ -28,10 +23,8 @@ export const DeleteBtn = ({ id }) => {
 
   return (
     <>
-      {" "}
       <button className="btn" onClick={sandRequest} style={style}>
-        {" "}
-        DELETE{" "}
+        DELETE
       </button>
       {isError && <Error />} {result && <DeleteModal />}
     </>

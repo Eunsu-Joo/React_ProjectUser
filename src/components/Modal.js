@@ -3,6 +3,7 @@ import { GrClose } from "react-icons/gr";
 import { useState } from "react/cjs/react.development";
 import { useNavigate } from "react-router";
 import PhotoItem from "./PhotoItem";
+
 const ModalContainer = styled.div`
   position: fixed;
   top: 0;
@@ -68,19 +69,21 @@ export const DeleteModal = () => {
     setIsVisible(!isVisible);
     navigator("/", { replace: true });
   };
+
   return (
-    <ModalContainer isVisible={isVisible}>
-      <Alert>
-        <GrClose style={iconStyle} onClick={onClose} />
-        <p>Thank you . Success Delete!</p>
-      </Alert>
-    </ModalContainer>
+    <>
+      <ModalContainer isVisible={isVisible}>
+        <Alert>
+          <GrClose style={iconStyle} onClick={onClose} />
+          <p>Thank you . Success Delete!</p>
+        </Alert>
+      </ModalContainer>
+    </>
   );
 };
 
 export const UpdateModal = (type) => {
   const [isVisible, setIsVisible] = useState(true);
-  console.log(type);
   return (
     <ModalContainer isVisible={isVisible}>
       <Alert>
@@ -102,9 +105,8 @@ export const AlbumModal = ({ data, isVisible, setIsVisible, isLoading }) => {
       ) : (
         <Album>
           <GrClose style={iconStyle} onClick={() => setIsVisible(!isVisible)} />
-          <h3>Photos</h3>{" "}
+          <h3>Photos</h3>
           <div className="imgContainer">
-            {" "}
             {data.map((photo) => (
               <PhotoItem data={photo} key={photo.id} />
             ))}
