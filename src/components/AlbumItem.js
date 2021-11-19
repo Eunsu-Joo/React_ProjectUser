@@ -1,9 +1,10 @@
 import { useState } from "react/cjs/react.development";
 import styled from "styled-components";
-import { userApi } from "api";
+
 import { AlbumModal } from "./Modal";
 import Error from "./Error";
 import { useCallback } from "react";
+import axios from "axios";
 const AlbumItem = styled.div`
   cursor: pointer;
   position: relative;
@@ -52,18 +53,21 @@ export default ({ data }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
 
-  const sendRequest = useCallback(async () => {
+  const sendRequest = async () => {
     setIsVisible(true);
     if (isSend) return;
     setIsSend(true);
     try {
-      const { data } = await userApi.photos(id);
+      const { data } = await axios.get(
+        `https://jsonplaceholder.typicode.com/photos?albumId=${id}`
+      );
       setPhotoData(data);
+      console.log(data);
       setIsLoading(false);
     } catch (error) {
       setIsError(error);
     }
-  }, [photoData]);
+  };
 
   return (
     <>

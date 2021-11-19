@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TiUserOutline } from "react-icons/ti";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { matchUser } from "common/common";
 const MainHeader = styled.header`
@@ -56,6 +56,8 @@ export default ({ data }) => {
   if (id === 0) {
     id = id + 10;
   }
+  const params = useParams();
+
   const changeUrl = (item) => {
     return navigator(`${item}/${id}`, { replace: true });
   };

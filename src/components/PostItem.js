@@ -1,9 +1,9 @@
-import { userApi } from "api";
 import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import CommentItem from "./CommentItem";
 import { useInput } from "hooks/useInput";
 import Error from "./Error";
+import axios from "axios";
 const PostItem = styled.div`
   margin-bottom: 1rem;
   background-color: #e9e9e9;
@@ -69,17 +69,19 @@ export default ({ post }) => {
     body: "",
   });
 
-  const sendRequest = useCallback(async () => {
+  const sendRequest = async () => {
     setIsCheck(!isCheck);
     if (isSend) return;
     try {
-      await userApi.comments(id).then((res) => setData(res.data));
+      await axios
+        .get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+        .then((res) => setData(res.data));
       setIsLoading(false);
       setIsSend(true);
     } catch (error) {
       setIsError(error);
     }
-  }, [data]);
+  };
   const onUpdate = () => {
     setData([...data, { ...comments, id: nextId.current }]);
     onReset();

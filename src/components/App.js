@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
-import { userApi } from "api";
+
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Home from "pages/Home";
@@ -12,38 +12,23 @@ import Albums from "pages/Albums";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import Error from "./Error";
+import useFetch from "hooks/useAsync";
+import { UserState } from "context/UserState";
 function App() {
-  const [data, setData] = useState(null);
-  const [isError, setIsError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  async function fetchUrl() {
-    try {
-      const { data } = await userApi.users();
-      setData(data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsError(error);
-    }
-  }
-  useEffect(() => fetchUrl(), []);
+  const { data, isLoading, error } = useFetch(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+  console.log(data, isLoading, error);
   return (
-    <>
+    <UserState>
       {isLoading ? (
-        isError ? (
-          <Error />
-        ) : (
-          <Loading />
-        )
+        <Loading />
       ) : (
         <>
           <GlobalStyles />
           <Header data={data} />
           <Routes>
-            <Route
-              path="/"
-              exact
-              element={<Home data={data} isError={isError} />}
-            />
+            <Route path="/" exact element={<Home data={data} />} />
             <Route path="user/:id" element={<UserDetail />} />
             <Route path="/edit" element={<Edit data={data} />} />
             <Route path="/edit/:id" element={<Edit data={data} />} />
@@ -54,7 +39,7 @@ function App() {
           <Footer />
         </>
       )}
-    </>
+    </UserState>
   );
 }
 

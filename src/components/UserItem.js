@@ -52,8 +52,13 @@ const User = styled.div`
 export default ({ data }) => {
   const { name, username, email, company, website, phone, id } = data;
   const navigator = useNavigate();
+
+  const handleClick = () => {
+    navigator(`user/${id}`);
+  };
+
   return (
-    <User onClick={() => navigator(`/user/${id}`)}>
+    <User onClick={handleClick}>
       <div className="imgBox">
         <img src={process.env.PUBLIC_URL + `/images/user${id}.jpg`} alt="" />
       </div>

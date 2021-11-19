@@ -1,4 +1,3 @@
-import { deleteApi } from "api";
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import Error from "./Error";
