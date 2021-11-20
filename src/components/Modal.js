@@ -15,7 +15,7 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${(props) => (props.isVisible ? `flex` : `none`)};
+  display:flex;
 `;
 const Alert = styled.div`
   width: 500px;
