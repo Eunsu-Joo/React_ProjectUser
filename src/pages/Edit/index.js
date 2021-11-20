@@ -4,13 +4,14 @@ import { useParams } from "react-router";
 import styles from "./Edit.module.css";
 import { useForm } from "react-hook-form";
 import { useUser } from "context/UserState";
+import useModal from "hooks/useModal";
 export default ({ data, onUpdate }) => {
   const { id } = useParams();
   const [userState, userDispatch] = useUser();
   const {
     data: { username: currentUsername },
   } = userState;
-  console.log(currentUsername);
+ 
   const {
     register,
     handleSubmit,

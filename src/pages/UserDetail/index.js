@@ -8,18 +8,20 @@ import { useEffect } from "react/cjs/react.development";
 import { useUser } from "context/UserState";
 import { clearUser, getUser } from "context/UserAction";
 import { cleanup } from "@testing-library/react";
+import useModal from "hooks/useModal";
+import { Modal } from "portal/Modal";
 export default () => {
   const navigator = useNavigate();
   const { id } = useParams();
   const [userState, userDispatch] = useUser();
   const { data: user, isLoading, error } = userState;
-
+  const {open,closeModal,openModal}= useModal();
+  console.log(open)
   useEffect(() => {
     const getUserInfoHandler = async () => {
       await getUser(userDispatch, id);
     };
     getUserInfoHandler();
-    console.log("after");
     return () => cleanup();
   }, []);
   return (
@@ -49,7 +51,7 @@ export default () => {
               </p>
               <p>Company: {user.company.name} </p>
               <div className={styles.btns}>
-                <DeleteBtn id={user.id} />
+                <button className="btn" onClick={openModal}>DELETE</button>
                 <button
                   className="btn"
                   onClick={() => navigator(`/edit/${user.id}`)}
@@ -65,6 +67,7 @@ export default () => {
               </p>
             </div>
           </article>
+          {open ? <Modal onClose={closeModal} /> :null}
         </>
       )}
       {error && <Error />}

@@ -10,19 +10,19 @@ const style = {
 export const DeleteBtn = ({ id }) => {
   const [result, setResult] = useState(false);
   const [isError, setIsError] = useState(null);
-  const sandRequest = async () => {
-    try {
-      await deleteApi(id).then(() => {
-        setResult(true);
-      });
-    } catch (e) {
-      setIsError(e);
-    }
-  };
+  // const sandRequest = async () => {
+  //   try {
+  //     await deleteApi(id).then(() => {
+  //       setResult(true);
+  //     });
+  //   } catch (e) {
+  //     setIsError(e);
+  //   }
+  // };
 
   return (
     <>
-      <button className="btn" onClick={sandRequest} style={style}>
+      <button className="btn"  style={style}>
         DELETE
       </button>
       {isError && <Error />} {result && <DeleteModal />}
