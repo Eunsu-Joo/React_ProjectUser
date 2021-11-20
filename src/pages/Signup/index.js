@@ -5,19 +5,13 @@ import styles from "./Edit.module.css";
 import { useForm } from "react-hook-form";
 import { useUser } from "context/UserState";
 import useModal from "hooks/useModal";
+import { Modal } from "portal/Modal";
+const axios = require('axios').default;
 
-export default ({ data, onUpdate }) => {
-  // const { id } = useParams();
-  // const [userState, userDispatch] = useUser();
-  // const {
-  //   data: { username: currentUsername },
-  // } = userState;
-  
-  console.log({
-    where: 'Signup/index',
-    // userState,
-  });
- 
+export default () => {
+  const {open, openModal,closeModal} = useModal(); // 회원가입 ㅊㅋㅊㅋn모달을 닫고 열게해주는 역활 // useState들에는 주석을 쓰자! (주어를 구체적으로)
+
+
   const {
     register,
     handleSubmit,
@@ -126,13 +120,47 @@ export default ({ data, onUpdate }) => {
   };
   const { name, username, phone, email, website } = validator;
   const onSubmit = (data) => {
-    console.log({
-      'where': 'onSubmit()',
-      onUpdate,
-      data,
+    console.log(
+    "data :",
+      data
+    );
+
+    
+    // var data = qs.stringify({
+    //   'name': '주은수',
+    //   'username': 'eunsu',
+    //   'phone': '01033860557',
+    //   'email': 'dmstn0557@naver.com',
+    //   'website': 'http://www.love.com' 
+    // });
+    var data2 = {
+      'name': '주은수',
+      'username': 'eunsu',
+      'phone': '01033860557',
+      'email': 'dmstn0557@naver.com',
+      'website': 'http://www.love.com' 
+    };
+    // var config = {
+    //   method: 'post',
+    //   url: 'https://jsonplaceholder.typicode.com/users',
+    //   headers: { 
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   },
+    //   data : data
+    // };
+
+    axios
+    .post('https://jsonplaceholder.typicode.com/users',data)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      openModal();
+      console.log("open:",open) // 링크읽어보기. 결과는 false임.
+      
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    onUpdate(data);
-    reset();
+    
   };
 
   return (
@@ -183,6 +211,7 @@ export default ({ data, onUpdate }) => {
             <button className="btn">{"Enroll"}</button>
           </div>
         </article>
+        {open ? (<Modal onClose={closeModal}>회원 가입 ㅊㅋㅊㅋ</Modal>) :null}
       </form>
     </section>
   );
