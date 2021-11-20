@@ -1,38 +1,20 @@
-import { matchUser } from "common/common";
 import { CheckIdBtn } from "components/Btn";
-import { useParams } from "react-router";
-import styles from "./Edit.module.css";
+import styles from "./Signup.module.css";
 import { useForm } from "react-hook-form";
-import { useUser } from "context/UserState";
 import useModal from "hooks/useModal";
 import { Modal } from "portal/Modal";
+import { useState } from "react";
 const axios = require('axios').default;
 
 export default () => {
-  const {open, openModal,closeModal} = useModal(); // 회원가입 ㅊㅋㅊㅋn모달을 닫고 열게해주는 역활 // useState들에는 주석을 쓰자! (주어를 구체적으로)
-
-
+  const {open, onOpenModal,closeModal} = useModal(); 
+  const [error,setError]= useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-    defaultValues: {
-      name: "",
-      username: "",
-      phone: "",
-      email: "",
-      website: "",
-    },
-    resolver: undefined,
-    context: undefined,
-    criteriaMode: "firstError",
-    shouldFocusError: true,
-    shouldUnregister: true,
-  });
+  } = useForm();
   const regExp = {
     korean: /^[가-힣]+$/,
     email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -119,50 +101,13 @@ export default () => {
     },
   };
   const { name, username, phone, email, website } = validator;
-  const onSubmit = (data) => {
-    console.log(
-    "data :",
-      data
-    );
 
+  const onSubmit = async(data) =>{
+      await axios.post('https://jsonplaceholder.typicode.com/users',data)
+      .then(() => onOpenModal(!open))
+    .catch(error =>{setError(true);onOpenModal(!open);console.log(error)})
     
-    // var data = qs.stringify({
-    //   'name': '주은수',
-    //   'username': 'eunsu',
-    //   'phone': '01033860557',
-    //   'email': 'dmstn0557@naver.com',
-    //   'website': 'http://www.love.com' 
-    // });
-    var data2 = {
-      'name': '주은수',
-      'username': 'eunsu',
-      'phone': '01033860557',
-      'email': 'dmstn0557@naver.com',
-      'website': 'http://www.love.com' 
-    };
-    // var config = {
-    //   method: 'post',
-    //   url: 'https://jsonplaceholder.typicode.com/users',
-    //   headers: { 
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   data : data
-    // };
-
-    axios
-    .post('https://jsonplaceholder.typicode.com/users',data)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-      openModal();
-      console.log("open:",open) // 링크읽어보기. 결과는 false임.
-      
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
-  };
-
+  }
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -208,10 +153,10 @@ export default () => {
             {errors.website && <p>{errors.website.message}</p>}
           </div>
           <div className={styles.btns}>
-            <button className="btn">{"Enroll"}</button>
+            <button className="btn">Enroll</button>
           </div>
         </article>
-        {open ? (<Modal onClose={closeModal}>회원 가입 ㅊㅋㅊㅋ</Modal>) :null}
+        {open && <Modal onClose={closeModal}>{error? 'Find Error! Check your console' : 'Success Delete! Thank you'}</Modal> }
       </form>
     </section>
   );
