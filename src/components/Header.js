@@ -100,7 +100,7 @@ export default ({ data }) => {
           </>
         ) : (
           <button className="btn">
-            <Link to="/edit">Enroll</Link>
+            <Link to="/signup">Enroll</Link>
           </button>
         )}
       </Nav>
