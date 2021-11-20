@@ -4,107 +4,17 @@ import { useForm } from "react-hook-form";
 import useModal from "hooks/useModal";
 import { Modal } from "portal/Modal";
 import { useState } from "react";
+import Validator from "common/Validator";
 const axios = require('axios').default;
 
 export default () => {
+  console.log(Validator())
   const {open, onOpenModal,closeModal} = useModal(); 
   const [error,setError]= useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-  const regExp = {
-    korean: /^[가-힣]+$/,
-    email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-    phone: /^010-?([0-9]{3,4})-?([0-9]{4})$/,
-    engNumber: /^[a-zA-Z0-9]*$/,
-    url: /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
-  };
-  const validator = {
-    name: {
-      ...register("name", {
-        // required: {
-        //   value: true,
-        //   message: "Please write your name",
-        // },
-        // pattern: {
-        //   value: regExp.korean,
-        //   message: "Input Korean Form",
-        // },
-        // maxLength: {
-        //   value: 10,
-        //   message: "Less than 10 characters",
-        // },
-      }),
-    },
-    username: {
-      ...register("username", {
-        // required: {
-        //   value: true,
-        //   message: "Please write username",
-        // },
-        // pattern: {
-        //   value: regExp.engNumber,
-        //   message: "Input English & Number Form",
-        // },
-        // maxLength: {
-        //   value: 20,
-        //   message: "Less than 20 characters",
-        // },
-      }),
-    },
-    phone: {
-      ...register("phone", {
-        // required: {
-        //   value: true,
-        //   message: "Please write phone number",
-        // },
-        // pattern: {
-        //   value: regExp.phone,
-        //   message: "Input phone Form",
-        // },
-      }),
-      maxLength: {
-        value: 12,
-        message: "Less than 12 characters",
-      },
-    },
-    email: {
-      ...register("email", {
-        // required: {
-        //   value: true,
-        //   message: "Please write email address",
-        // },
-        // pattern: {
-        //   value: regExp.email,
-        //   message: "Input email form",
-        // },
-        // maxLength: {
-        //   value: 50,
-        //   message: "Less than 20 characters",
-        // },
-      }),
-    },
-    website: {
-      ...register("website", {
-        // required: {
-        //   value: true,
-        //   message: "Please write your website",
-        // },
-        // pattern: {
-        //   value: regExp.url,
-        //   message: "Input Url form",
-        // },
-      }),
-    },
-  };
-  const { name, username, phone, email, website } = validator;
-
+const {inputValidator:{name,username,email,website,phone},handleSubmit,reset,errors}= Validator('');
   const onSubmit = async(data) =>{
       await axios.post('https://jsonplaceholder.typicode.com/users',data)
-      .then(() => onOpenModal(!open))
+      .then(() => {onOpenModal(!open);reset();})
     .catch(error =>{setError(true);onOpenModal(!open);console.log(error)})
     
   }
