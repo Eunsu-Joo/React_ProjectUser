@@ -33,6 +33,10 @@ function App() {
             <Route path="user/:id" element={<UserDetail />} />
             <Route path="/edit" element={<Edit data={data} />} />
             <Route path="/edit/:id" element={<Edit data={data} />} />
+            <Route path="/edit/:id" element={<Edit data={data} onUpdate={()=> {
+              alert('TODO: 개발 필요');
+              // TODO: 개발 필요
+            }}/>} />
             <Route path="/posts/:id" element={<Posts />} />
             <Route path="/todos/:id" element={<Todos />} />
             <Route path="albums/:id" element={<Albums />} />
