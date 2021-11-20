@@ -45,7 +45,9 @@ export const Modal =({onClose,children}) => {
             <ModalContainer>
             <Alert>
           <GrClose style={iconStyle} onClick={onClose} />
-          <p>Thank you . Success Delete!</p>
+          <p>
+            {children}
+          </p>
         </Alert>
             </ModalContainer>
         </Portal>

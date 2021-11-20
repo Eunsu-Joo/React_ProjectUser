@@ -67,7 +67,7 @@ export default () => {
               </p>
             </div>
           </article>
-          {open ? <Modal onClose={closeModal} /> :null}
+          {open ? (<Modal onClose={closeModal}>Thank you . Success Delete!</Modal>) :null}
         </>
       )}
       {error && <Error />}
