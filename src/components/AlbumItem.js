@@ -1,9 +1,7 @@
 import { useState } from "react/cjs/react.development";
 import styled from "styled-components";
-
 import { AlbumModal } from "./Modal";
 import Error from "./Error";
-import { useCallback } from "react";
 import axios from "axios";
 const AlbumItem = styled.div`
   cursor: pointer;

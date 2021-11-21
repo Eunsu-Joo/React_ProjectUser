@@ -1,4 +1,5 @@
 import { useState } from "react"
+
 //모달 사용하기 위한 hooks (close, open control)
 const useModal =() => {
     const [open,onOpenModal]= useState(false);
@@ -10,7 +11,7 @@ const useModal =() => {
         onCloseModal(true)
         onOpenModal(false);
     }
-    return {open,close,openModal,closeModal}
+    return {open,close,openModal,closeModal,onOpenModal}
 }
 
 export default useModal;

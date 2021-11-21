@@ -1,4 +1,4 @@
-import {CheckIdBtn} from "components/Btn";
+import {CheckIdBtn, ReviseBtn} from "components/Btn";
 import {useParams} from "react-router";
 import styles from "./Edit.module.css";
 import Validator from "common/Validator";
@@ -33,12 +33,12 @@ export default() => {
         await axios
             .put(`https://jsonplaceholder.typicode.com/users/${id}`, data)
             .then(() => {
-                onOpenModal(!open)
-                reset()
+                onOpenModal(!open);
+                reset();
             })
             .catch(error => {
                 setError(error);
-                onOpenModal(!open)
+                onOpenModal(!open);
             })
         }
     return (
@@ -79,7 +79,7 @@ export default() => {
                         {errors.website && <p>{errors.website.message}</p>}
                     </div>
                     <div className={styles.btns}>
-                        <button className="btn">Revise</button>
+                        <ReviseBtn />
                     </div>
                 </article>
             </form>

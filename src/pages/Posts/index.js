@@ -1,7 +1,7 @@
 import Error from "components/Error";
 import Loading from "components/Loading";
 import PostItem from "components/PostItem";
-import useFetch from "hooks/useAsync";
+import {useFetch} from "hooks/useAsync";
 import { useParams } from "react-router";
 import styles from "./Posts.module.css";
 export default () => {

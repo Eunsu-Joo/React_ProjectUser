@@ -5,7 +5,7 @@ import styles from "./Todos.module.css";
 import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import TodoItem from "components/TodoItem";
 import { useParams } from "react-router";
-import useFetch from "hooks/useAsync";
+import {useFetch} from "hooks/useAsync";
 export default () => {
   const [isCheck, setIsCheck] = useState(false);
   const { id } = useParams();
