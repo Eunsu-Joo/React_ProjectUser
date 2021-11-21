@@ -87,11 +87,7 @@ input:focus {
   color: #eb2f06;
   font-weight: 700;
 }
-.inputBox p::before {
-  content: "❌";
-  font-size: 10px;
-  padding-right: 6px;
-}
+
 
 .btns {
   margin-top: 60px;
