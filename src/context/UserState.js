@@ -13,7 +13,6 @@ export const UserState = ({ children }) => {
     error: null,
   };
   const [state, dispatch] = useReducer(UserReducer, initialState);
-
   return (
     <UserContext.Provider value={{ state: state, dispatch: dispatch }}>
       {children}

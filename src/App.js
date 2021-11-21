@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
-
 import GlobalStyles from "components/GlobalStyles";
 import Header from "components/Header";
 import Home from "pages/Home";
@@ -13,30 +11,34 @@ import Albums from "pages/Albums";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
 import Error from "components/Error";
-import useFetch from "hooks/useAsync";
-import { UserState } from "context/UserState";
+import {useFetch } from "hooks/useAsync";
+import { UserState, useUser } from "context/UserState";
+import { useEffect } from "react";
+import { getUsers } from "context/UserAction";
+import { useContext } from "react/cjs/react.development";
+import { UserContext } from "context/UserContext";
 
 function App() {
-  const { data, isLoading, error } = useFetch(
-    "https://jsonplaceholder.typicode.com/users"
-  );
-
+  const {state:{isLoading,error},dispatch}= useContext(UserContext);
+  useEffect(() => {
+    const getUsersInfo= async() => {
+      await getUsers(dispatch)
+    }
+    getUsersInfo()
+  },[])
   return (
-    <UserState>
+    <>
       {isLoading ? (
         <Loading />
       ) : (
         <>
           <GlobalStyles />
-          <Header data={data} />
+          <Header />
           <Routes>
-            <Route path="/" exact element={<Home data={data} />} />
+            <Route path="/" exact element={<Home />} />
             <Route path="user/:id" element={<UserDetail />} />
-            <Route path="/signup" element={<Signup data={data} />} />
-            <Route path="/edit/:id" element={<Edit data={data} onUpdate={()=> {
-              alert('TODO: 개발 필요');
-              // TODO: 개발 필요
-            }}/>} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/edit/:id" element={<Edit />} />
             <Route path="/posts/:id" element={<Posts />} />
             <Route path="/todos/:id" element={<Todos />} />
             <Route path="albums/:id" element={<Albums />} />
@@ -46,7 +48,7 @@ function App() {
       )}
       {error && <Error />}
       
-    </UserState>
+    </>
 
   );
 }

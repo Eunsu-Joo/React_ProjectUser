@@ -3,27 +3,17 @@ import styles from "./User.module.css";
 import { useNavigate, useParams } from "react-router";
 import Loading from "components/Loading";
 import Error from "components/Error";
-import useFetch from "hooks/useAsync";
-import { useEffect } from "react/cjs/react.development";
-import { useUser } from "context/UserState";
-import { clearUser, getUser } from "context/UserAction";
-import { cleanup } from "@testing-library/react";
+import {useFetch } from "hooks/useAsync";
 import useModal from "hooks/useModal";
 import { Modal } from "portal/Modal";
 export default () => {
   const navigator = useNavigate();
   const { id } = useParams();
-  const [userState, userDispatch] = useUser();
-  const { data: user, isLoading, error } = userState;
+  const { data:user, isLoading, error } = useFetch(
+    `https://jsonplaceholder.typicode.com/users/${id}`
+  );
   const {open,closeModal,openModal}= useModal();
-  console.log(open)
-  useEffect(() => {
-    const getUserInfoHandler = async () => {
-      await getUser(userDispatch, id);
-    };
-    getUserInfoHandler();
-    return () => cleanup();
-  }, []);
+
   return (
     <section className={styles.container}>
       {isLoading ? (
