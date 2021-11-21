@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Portal from "./Portal";
 import { GrClose } from "react-icons/gr";
+import { useNavigate } from "react-router";
 const ModalContainer = styled.div`
   position: fixed;
   top: 0;
@@ -39,12 +40,18 @@ const iconStyle = {
   right: `1rem`,
   cursor: `pointer`,
 };
-export const Modal =({onClose,children}) => {
+export const Modal =({children,onClose}) => {
+  
+  const navigator= useNavigate();
+  const handleClose= () => {
+    onClose()
+    // navigator('/')
+  }
     return (
         <Portal>
             <ModalContainer>
             <Alert>
-          <GrClose style={iconStyle} onClick={onClose} />
+          <GrClose style={iconStyle} onClick={handleClose} />
           <p>
             {children}
           </p>

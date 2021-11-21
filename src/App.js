@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { getUsers } from "context/UserAction";
+import { useContext } from "react/cjs/react.development";
+import { UserContext } from "context/UserContext";
 import { Route, Routes } from "react-router";
 import GlobalStyles from "components/GlobalStyles";
 import Header from "components/Header";
@@ -11,12 +15,6 @@ import Albums from "pages/Albums";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
 import Error from "components/Error";
-import {useFetch } from "hooks/useAsync";
-import { UserState, useUser } from "context/UserState";
-import { useEffect } from "react";
-import { getUsers } from "context/UserAction";
-import { useContext } from "react/cjs/react.development";
-import { UserContext } from "context/UserContext";
 
 function App() {
   const {state:{isLoading,error},dispatch}= useContext(UserContext);
@@ -26,6 +24,9 @@ function App() {
     }
     getUsersInfo()
   },[])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <>
       {isLoading ? (

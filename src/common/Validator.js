@@ -4,6 +4,7 @@ const Validator =(username) => {
         register,
         handleSubmit,
         reset,
+        getValues,
         formState: { errors },
       } = useForm({
         mode: "onSubmit",
@@ -31,46 +32,46 @@ const Validator =(username) => {
       const inputValidator = {
         name: {
           ...register("name", {
-            // required: {
-            //   value: true,
-            //   message: "Please write your name",
-            // },
-            // pattern: {
-            //   value: regExp.korean,
-            //   message: "Input Korean Form",
-            // },
-            // maxLength: {
-            //   value: 10,
-            //   message: "Less than 10 characters",
-            // },
+            required: {
+              value: true,
+              message: "Please write your name",
+            },
+            pattern: {
+              value: regExp.korean,
+              message: "Input Korean Form",
+            },
+            maxLength: {
+              value: 10,
+              message: "Less than 10 characters",
+            },
           }),
         },
         username: {
           ...register("username", {
-            // required: {
-            //   value: true,
-            //   message: "Please write username",
-            // },
-            // pattern: {
-            //   value: regExp.engNumber,
-            //   message: "Input English & Number Form",
-            // },
-            // maxLength: {
-            //   value: 20,
-            //   message: "Less than 20 characters",
-            // },
+            required: {
+              value: true,
+              message: "Please write username",
+            },
+            pattern: {
+              value: regExp.engNumber,
+              message: "Input English & Number Form",
+            },
+            maxLength: {
+              value: 20,
+              message: "Less than 20 characters",
+            },
           }),
         },
         phone: {
           ...register("phone", {
-            // required: {
-            //   value: true,
-            //   message: "Please write phone number",
-            // },
-            // pattern: {
-            //   value: regExp.phone,
-            //   message: "Input phone Form",
-            // },
+            required: {
+              value: true,
+              message: "Please write phone number",
+            },
+            pattern: {
+              value: regExp.phone,
+              message: "Input phone Form",
+            },
           }),
           maxLength: {
             value: 12,
@@ -79,30 +80,30 @@ const Validator =(username) => {
         },
         email: {
           ...register("email", {
-            // required: {
-            //   value: true,
-            //   message: "Please write email address",
-            // },
-            // pattern: {
-            //   value: regExp.email,
-            //   message: "Input email form",
-            // },
-            // maxLength: {
-            //   value: 50,
-            //   message: "Less than 20 characters",
-            // },
+            required: {
+              value: true,
+              message: "Please write email address",
+            },
+            pattern: {
+              value: regExp.email,
+              message: "Input email form",
+            },
+            maxLength: {
+              value: 50,
+              message: "Less than 20 characters",
+            },
           }),
         },
         website: {
           ...register("website", {
-            // required: {
-            //   value: true,
-            //   message: "Please write your website",
-            // },
-            // pattern: {
-            //   value: regExp.url,
-            //   message: "Input Url form",
-            // },
+            required: {
+              value: true,
+              message: "Please write your website",
+            },
+            pattern: {
+              value: regExp.url,
+              message: "Input Url form",
+            },
           }),
         },
       };
