@@ -1,49 +1,50 @@
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
-import Error from "./Error";
+import { useRef, useState } from "react";
+import axios from "axios";
+import useModal from "hooks/useModal";
+import { Modal } from "portal/Modal";
+import { useNavigate } from "react-router";
 
-import { DeleteModal } from "./Modal";
 const style = {
   marginRight: "24px",
 };
 
-export const DeleteBtn = ({ id }) => {
-  const [result, setResult] = useState(false);
-  const [isError, setIsError] = useState(null);
-  // const sandRequest = async () => {
-  //   try {
-  //     await deleteApi(id).then(() => {
-  //       setResult(true);
-  //     });
-  //   } catch (e) {
-  //     setIsError(e);
-  //   }
-  // };
-
+export const DeleteBtn = ({id}) => {
+  const {open,onOpenModal,closeModal}=useModal();
+  const [error,setError]= useState(null)
+  const onDelete = async()=> {
+    axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+    .then(() =>onOpenModal(!open))
+    .catch(error => {setError(error);onOpenModal(!open)})
+  }
   return (
     <>
-      <button className="btn"  style={style}>
+      <button className="btn" onClick={onDelete}  style={style}>
         DELETE
       </button>
-      {isError && <Error />} {result && <DeleteModal />}
+      {open && <Modal onClose={closeModal}>
+          {error? 'Find Error! Check your console' : 'Thank you . Success Delete!'}
+        </Modal>}
     </>
   );
 };
 
-export const CheckIdBtn = ({ disabled, data, value }) => {
-  const [isCheck, setIsCheck] = useState(true);
-  const handleCheck = () => {
-    if (isCheck) {
-      data.some((username) => (username = value))
-        ? console.log("correct")
-        : console.log("incorrect");
-    }
-  };
+export const CheckIdBtn = ({isCheck,value}) => {
+
   return (
     <>
-      <button className="btn" disabled={disabled} onClick={handleCheck}>
-        CHECK ID
-      </button>
+
     </>
   );
-};
+  };
+ 
+export const ReviseBtn= ({url,id}) => {
+  const navigator=useNavigate()
+  const changeUrl= () => {
+    navigator(`/edit/${id}`)
+  }
+return <button className="btn" onClick={url&&changeUrl}>REVISE</button>
+}
+export const EnrollBtn=() => {
+  return <button className="btn" type="submit">ENROLL</button>
+
+}

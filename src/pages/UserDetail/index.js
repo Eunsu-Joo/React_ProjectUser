@@ -1,4 +1,4 @@
-import { DeleteBtn } from "components/Btn";
+import { DeleteBtn, ReviseBtn } from "components/Btn";
 import styles from "./User.module.css";
 import { useNavigate, useParams } from "react-router";
 import Loading from "components/Loading";
@@ -12,10 +12,10 @@ export default () => {
   const { data:user, isLoading, error } = useFetch(
     `https://jsonplaceholder.typicode.com/users/${id}`
   );
-  const {open,closeModal,openModal}= useModal();
 
   return (
     <section className={styles.container}>
+          
       {isLoading ? (
         <Loading />
       ) : (
@@ -41,13 +41,8 @@ export default () => {
               </p>
               <p>Company: {user.company.name} </p>
               <div className={styles.btns}>
-                <button className="btn" onClick={openModal}>DELETE</button>
-                <button
-                  className="btn"
-                  onClick={() => navigator(`/edit/${user.id}`)}
-                >
-                  REVISE
-                </button>
+              <DeleteBtn id={id} />
+              <ReviseBtn url={true} id={id}/>
               </div>
             </div>
             <div className={styles.text}>
@@ -57,10 +52,9 @@ export default () => {
               </p>
             </div>
           </article>
-          {open ? (<Modal onClose={closeModal}>Thank you . Success Delete!</Modal>) :null}
         </>
       )}
-      {error && <Error />}
+  {error && <Error />}
     </section>
   );
 };
