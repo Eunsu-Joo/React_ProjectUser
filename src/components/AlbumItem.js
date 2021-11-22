@@ -51,13 +51,12 @@ export default ({ data }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { open, onOpenModal, closeModal } = useModal();
-  const handleRequest = () => {
+  const handleClick = () => {
     onOpenModal(!open);
     if (isSend) return false;
     sandRequest();
   };
   const sandRequest = async () => {
-    console.log(id);
     await axios
       .get(`https://jsonplaceholder.typicode.com/photos?albumId=${id}`)
       .then((res) => setPhotoData(res.data))
@@ -70,7 +69,7 @@ export default ({ data }) => {
   useEffect(() => sandRequest, []);
   return (
     <>
-      <AlbumItem onClick={handleRequest}>
+      <AlbumItem onClick={handleClick}>
         <div className="imgBox">
           <img
             src={process.env.PUBLIC_URL + `/images/photo${userId}.png`}

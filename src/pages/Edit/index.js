@@ -176,7 +176,7 @@ export default () => {
         </article>
       </form>
       {open && (
-        <Modal onClose={closeModal}>
+        <Modal onClose={closeModal} goHome={true} type="alert">
           {apiError
             ? "Find Error! Check your console"
             : "Success Update Your Information!"}
