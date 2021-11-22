@@ -15,24 +15,27 @@ import Albums from "pages/Albums";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
 import Error from "components/Error";
+import ScrollToTop from "common/ScrollToTop";
 
 function App() {
-  const {state:{isLoading,error},dispatch}= useContext(UserContext);
+  const {
+    state: { isLoading, error },
+    dispatch,
+  } = useContext(UserContext);
   useEffect(() => {
-    const getUsersInfo= async() => {
-      await getUsers(dispatch)
-    }
-    getUsersInfo()
-  },[])
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    const getUsersInfo = async () => {
+      await getUsers(dispatch);
+    };
+    getUsersInfo();
+  }, []);
+
   return (
     <>
       {isLoading ? (
         <Loading />
       ) : (
         <>
+          <ScrollToTop />
           <GlobalStyles />
           <Header />
           <Routes>
@@ -48,9 +51,7 @@ function App() {
         </>
       )}
       {error && <Error />}
-      
     </>
-
   );
 }
 
