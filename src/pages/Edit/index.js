@@ -7,6 +7,7 @@ import { matchUser } from "common/common";
 import { Modal } from "portal/Modal";
 import { UserContext } from "context/UserContext";
 import useModal from "hooks/useModal";
+import validator from "common/validator";
 const axios = require("axios").default;
 export default () => {
   const [error, setError] = useState(null);
@@ -24,76 +25,11 @@ export default () => {
     website: "",
     email: "",
   });
-  const { name, email, phone, website } = data;
-  const validator = () => {
-    let formValid = true;
-    let errors = {};
-    //name
-    if (name === "") {
-      formValid = false;
-      errors["name"] = "Cannot be empty";
-    }
-    if (name !== "") {
-      if (!name.match(/^[가-힣]+$/)) {
-        formValid = false;
-        errors["name"] = "Only Write Korean";
-        if (name.length > 10) {
-          formValid = false;
-          errors["name"] = "Less than 10 characters";
-        }
-      }
-    }
-    //phone
-    if (phone === "") {
-      formValid = false;
-      errors["phone"] = "Cannot be empty";
-    }
-    if (phone !== "") {
-      if (!phone.match(/^010-?([0-9]{3,4})-?([0-9]{4})$/)) {
-        formValid = false;
-        errors["phone"] = "Input phone Form";
-        if (phone.length > 11) {
-          formValid = false;
-          errors["phone"] = "Less than 11 characters";
-        }
-      }
-    }
-    //email
-    if (email === "") {
-      formValid = false;
-      errors["email"] = "Cannot be empty";
-    }
-    if (email !== "") {
-      if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
-        formValid = false;
-        errors["email"] = "Input email form";
-        if (email.length > 50) {
-          formValid = false;
-          errors["email"] = "Less than 50 characters";
-        }
-      }
-    }
-    //website
-    if (website === "") {
-      formValid = false;
-      errors["website"] = "Cannot be empty";
-    }
-    if (website !== "") {
-      if (
-        !website.match(
-          /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-        )
-      ) {
-        formValid = false;
-        errors["website"] = "Input website form";
-      }
-    }
-    setError({ errors });
-    return formValid;
-  };
+  const { formValid, errors } = validator(data);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validator()) {
+    setError(errors);
+    if (formValid) {
       await axios
         .put(`https://jsonplaceholder.typicode.com/users/${id}`, data)
         .then(() => {
@@ -129,7 +65,7 @@ export default () => {
               name="name"
               onChange={onChange}
             />
-            {error !== null ? <p>{error.errors.name}</p> : null}
+            {error ? <p>{errors.name}</p> : null}
           </div>
           <div className={styles.inputBox}>
             <input
@@ -150,7 +86,7 @@ export default () => {
               name="phone"
               onChange={onChange}
             />
-            {error !== null ? <p>{error.errors.phone}</p> : null}
+            {error ? <p>{errors.phone}</p> : null}
           </div>{" "}
           <div className={styles.inputBox}>
             <input
@@ -159,7 +95,7 @@ export default () => {
               name="email"
               onChange={onChange}
             />
-            {error !== null ? <p>{error.errors.email}</p> : null}
+            {error ? <p>{errors.email}</p> : null}
           </div>{" "}
           <div className={styles.inputBox}>
             <input
@@ -168,7 +104,7 @@ export default () => {
               name="website"
               onChange={onChange}
             />
-            {error !== null ? <p>{error.errors.website}</p> : null}
+            {error ? <p>{errors.website}</p> : null}
           </div>
           <div className={styles.btns}>
             <ReviseBtn />
