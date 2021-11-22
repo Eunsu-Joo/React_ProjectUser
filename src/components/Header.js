@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { matchUser } from "common/common";
 import { useContext } from "react";
-import { UserContext } from "context/UserContext";
+import { UsersContext } from "context/UserContext";
 const MainHeader = styled.header`
   width: 100%;
   height: 60px;
@@ -60,7 +60,7 @@ export default () => {
   }
   const {
     state: { data },
-  } = useContext(UserContext);
+  } = useContext(UsersContext);
   const { username } = matchUser(data, id);
   return (
     <MainHeader>

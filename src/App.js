@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getUsers } from "context/UserAction";
 import { useContext } from "react/cjs/react.development";
-import { UserContext } from "context/UserContext";
+import { UsersContext } from "context/UserContext";
 import { Route, Routes } from "react-router";
 import GlobalStyles from "components/GlobalStyles";
 import Header from "components/Header";
@@ -16,12 +16,13 @@ import Footer from "components/Footer";
 import Loading from "components/Loading";
 import Error from "components/Error";
 import ScrollToTop from "common/ScrollToTop";
+import { PersonState } from "context/UserState";
 
 function App() {
   const {
     state: { isLoading, error },
     dispatch,
-  } = useContext(UserContext);
+  } = useContext(UsersContext);
   useEffect(() => {
     const getUsersInfo = async () => {
       await getUsers(dispatch);
@@ -30,7 +31,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <PersonState>
       {error && <Error />}
       {isLoading ? (
         <Loading />
@@ -51,7 +52,7 @@ function App() {
           <Footer />
         </>
       )}
-    </>
+    </PersonState>
   );
 }
 

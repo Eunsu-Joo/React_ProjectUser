@@ -1,7 +1,13 @@
+import { cleanup } from "@testing-library/react";
+import { FetchData } from "common/fetchData";
+import { getPerson, getUser } from "context/UserAction";
+import { PersonContext, TestContext, UsersContext } from "context/UserContext";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 import { DeleteBtn, ReviseBtn } from "./Btn";
-
+const { useParams } = require("react-router");
 const User = styled.div`
   width: 100%;
   margin: 0 1rem 2rem 0;
@@ -56,9 +62,14 @@ const User = styled.div`
 export default ({ data }) => {
   const { name, username, email, company, website, phone, id } = data;
   const navigator = useNavigate();
-
+  const { state, dispatch } = useContext(PersonContext);
+  const { id: param } = useParams();
+  // const fetchPerson = async () => {
+  //   await getPerson(dispatch, id);
+  // };
   const handleClick = () => {
     navigator(`user/${id}`);
+    console.log(param);
   };
 
   return (

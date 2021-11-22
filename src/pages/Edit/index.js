@@ -5,7 +5,7 @@ import { useInput } from "hooks/useInput";
 import { useContext, useState } from "react";
 import { matchUser } from "common/common";
 import { Modal } from "portal/Modal";
-import { UserContext } from "context/UserContext";
+import { UsersContext } from "context/UserContext";
 import useModal from "hooks/useModal";
 import validator from "common/validator";
 const axios = require("axios").default;
@@ -15,7 +15,7 @@ export default () => {
   const { open, onOpenModal, closeModal } = useModal();
   const {
     state: { data: users },
-  } = useContext(UserContext);
+  } = useContext(UsersContext);
   const { id } = useParams();
   const { username: currentUser } = matchUser(users, id);
   const [data, onChange] = useInput({

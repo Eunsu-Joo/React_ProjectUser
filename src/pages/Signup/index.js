@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useContext } from "react";
 import useModal from "hooks/useModal";
 import { Modal } from "portal/Modal";
-import { UserContext } from "context/UserContext";
+import { UsersContext } from "context/UserContext";
 import { useInput } from "hooks/useInput";
 import validator from "common/validator";
 const axios = require("axios").default;
@@ -21,7 +21,7 @@ export default () => {
   const { formValid, errors } = validator(data);
   const {
     state: { data: users },
-  } = useContext(UserContext);
+  } = useContext(UsersContext);
   const usernames = users.map((user) => user.username);
   const ref = useRef();
   const onCheckUser = () => {
