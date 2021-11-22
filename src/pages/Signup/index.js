@@ -1,8 +1,8 @@
 import styles from "./Signup.module.css";
+import { useRef, useState } from "react";
+import { useContext } from "react";
 import useModal from "hooks/useModal";
 import { Modal } from "portal/Modal";
-import { useEffect, useRef, useState } from "react";
-import { useContext } from "react/cjs/react.development";
 import { UserContext } from "context/UserContext";
 import { useInput } from "hooks/useInput";
 const axios = require("axios").default;

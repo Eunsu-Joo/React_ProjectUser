@@ -1,6 +1,5 @@
-const { createGlobalStyle } = require("styled-components");
-const { default: reset } = require("styled-reset");
-
+import { createGlobalStyle } from "styled-components";
+import { reset } from "styled-reset";
 const GlobalStyles = createGlobalStyle`
     ${reset};
     *{
@@ -16,7 +15,6 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Lato', sans-serif;
 
 background-color:#fff ;
-/* overflow: hidden; */
 color: #555;
     }
     ol,ul,li{

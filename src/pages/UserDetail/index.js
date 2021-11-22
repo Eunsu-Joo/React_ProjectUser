@@ -1,21 +1,20 @@
-import { DeleteBtn, ReviseBtn } from "components/Btn";
 import styles from "./User.module.css";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
+import { DeleteBtn, ReviseBtn } from "components/Btn";
 import Loading from "components/Loading";
 import Error from "components/Error";
-import {useFetch } from "hooks/useAsync";
-import useModal from "hooks/useModal";
-import { Modal } from "portal/Modal";
+import { useFetch } from "hooks/useAsync";
+
 export default () => {
-  const navigator = useNavigate();
   const { id } = useParams();
-  const { data:user, isLoading, error } = useFetch(
-    `https://jsonplaceholder.typicode.com/users/${id}`
-  );
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useFetch(`https://jsonplaceholder.typicode.com/users/${id}`);
 
   return (
     <section className={styles.container}>
-          
       {isLoading ? (
         <Loading />
       ) : (
@@ -41,8 +40,8 @@ export default () => {
               </p>
               <p>Company: {user.company.name} </p>
               <div className={styles.btns}>
-              <DeleteBtn id={id} />
-              <ReviseBtn url={true} id={id}/>
+                <DeleteBtn id={id} />
+                <ReviseBtn url={true} id={id} />
               </div>
             </div>
             <div className={styles.text}>
@@ -54,7 +53,7 @@ export default () => {
           </article>
         </>
       )}
-  {error && <Error />}
+      {error && <Error />}
     </section>
   );
 };

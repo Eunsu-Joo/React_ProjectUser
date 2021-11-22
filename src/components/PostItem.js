@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import CommentItem from "./CommentItem";
 import { useInput } from "hooks/useInput";
@@ -72,15 +72,14 @@ export default ({ post }) => {
   const sendRequest = async () => {
     setIsCheck(!isCheck);
     if (isSend) return;
-    try {
-      await axios
-        .get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
-        .then((res) => setData(res.data));
-      setIsLoading(false);
-      setIsSend(true);
-    } catch (error) {
-      setIsError(error);
-    }
+    await axios
+      .get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+      .then((res) => setData(res.data))
+      .then(() => {
+        setIsLoading(false);
+        setIsSend(true);
+      })
+      .catch((error) => setIsError(error));
   };
   const onUpdate = () => {
     setData([...data, { ...comments, id: nextId.current }]);

@@ -1,7 +1,5 @@
-import { useContext, useReducer } from "react";
+import { useReducer } from "react";
 import { UserContext, UserReducer } from "./UserContext";
-
-
 
 export const UserState = ({ children }) => {
   const initialState = {

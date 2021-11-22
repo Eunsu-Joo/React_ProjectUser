@@ -3,10 +3,10 @@ import { ReviseBtn } from "components/Btn";
 import { useParams } from "react-router";
 import { useInput } from "hooks/useInput";
 import { useContext, useState } from "react";
-import useModal from "hooks/useModal";
 import { matchUser } from "common/common";
 import { Modal } from "portal/Modal";
 import { UserContext } from "context/UserContext";
+import useModal from "hooks/useModal";
 const axios = require("axios").default;
 export default () => {
   const [error, setError] = useState(null);

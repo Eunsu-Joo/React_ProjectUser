@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react/cjs/react.development";
+import { useState } from "react";
+import { Modal } from "portal/Modal";
 import styled from "styled-components";
 import axios from "axios";
-import { Modal } from "portal/Modal";
 import useModal from "hooks/useModal";
 import PhotoItem from "./PhotoItem";
 const AlbumItem = styled.div`
@@ -14,11 +14,13 @@ const AlbumItem = styled.div`
     }
   }
   .imgBox {
-    width: 100%;
-    height: 100%;
+    width: 420px;
+    height: 420px;
+    overflow: hidden;
     img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
   .desc {
@@ -45,7 +47,7 @@ const AlbumItem = styled.div`
 `;
 
 export default ({ data }) => {
-  const { userId, title, userId: id } = data;
+  const { userId, title, id } = data;
   const [photoData, setPhotoData] = useState(null);
   const [isSend, setIsSend] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,13 +68,13 @@ export default ({ data }) => {
       })
       .catch((error) => setError(error));
   };
-  useEffect(() => sandRequest, []);
+
   return (
     <>
       <AlbumItem onClick={handleClick}>
         <div className="imgBox">
           <img
-            src={process.env.PUBLIC_URL + `/images/photo${userId}.png`}
+            src={process.env.PUBLIC_URL + `/images/user${userId}.jpg`}
             alt=""
           />
         </div>

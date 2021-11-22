@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// Set Loading
-
 export const getUsers = async (dispatch) => {
   // do fetch
   await axios

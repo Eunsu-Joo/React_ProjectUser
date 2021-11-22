@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
-import axios from "axios";
-import useModal from "hooks/useModal";
+import { useState } from "react";
 import { Modal } from "portal/Modal";
 import { useNavigate } from "react-router";
+import axios from "axios";
+import useModal from "hooks/useModal";
 
 const style = {
   marginRight: "24px",
@@ -12,7 +12,7 @@ export const DeleteBtn = ({ id }) => {
   const { open, onOpenModal, closeModal } = useModal();
   const [error, setError] = useState(null);
   const onDelete = async () => {
-    axios
+    await axios
       .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then(() => onOpenModal(!open))
       .catch((error) => {

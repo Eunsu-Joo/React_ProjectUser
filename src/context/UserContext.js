@@ -1,4 +1,4 @@
-const { createContext } = require("react");
+import { createContext } from "react";
 const UserContext = createContext();
 const UserReducer = (state, action) => {
   switch (action.type) {
