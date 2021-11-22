@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { DeleteBtn, ReviseBtn } from "./Btn";
 
 const User = styled.div`
   width: 100%;
@@ -39,6 +40,9 @@ const User = styled.div`
       transform: scale(1);
     }
   }
+  .btns {
+    margin: 1.5rem 0;
+  }
   &:hover {
     background: #f9f9f9;
     color: #333;
@@ -58,8 +62,8 @@ export default ({ data }) => {
   };
 
   return (
-    <User onClick={handleClick}>
-      <div className="imgBox">
+    <User>
+      <div className="imgBox" onClick={handleClick}>
         <img src={process.env.PUBLIC_URL + `/images/user${id}.jpg`} alt="" />
       </div>
       <h3>
@@ -70,6 +74,10 @@ export default ({ data }) => {
       <h4>Contact Me</h4>
       <p>Phone : {phone}</p>
       <p>Website : {website}</p>
+      <div className="btns">
+        <DeleteBtn id={id} />
+        <ReviseBtn url={true} id={id} />
+      </div>
     </User>
   );
 };
