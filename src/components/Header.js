@@ -3,6 +3,8 @@ import { TiUserOutline } from "react-icons/ti";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { matchUser } from "common/common";
+import { useContext } from "react";
+import { UserContext } from "context/UserContext";
 const MainHeader = styled.header`
   width: 100%;
   height: 60px;
@@ -49,18 +51,16 @@ const greeting = {
   marginLeft: "0.5em",
 };
 
-export default ({ data }) => {
+export default () => {
   const { pathname } = useLocation();
   const navigator = useNavigate();
   let id = parseInt(pathname.slice(-1));
   if (id === 0) {
     id = id + 10;
   }
-  const params = useParams();
-
-  const changeUrl = (item) => {
-    return navigator(`${item}/${id}`, { replace: true });
-  };
+  const {
+    state: { data },
+  } = useContext(UserContext);
   const { username } = matchUser(data, id);
   return (
     <MainHeader>
@@ -74,21 +74,21 @@ export default ({ data }) => {
               <GnbItem
                 path
                 current={pathname.includes("posts")}
-                onClick={() => changeUrl("posts")}
+                onClick={() => navigator(`posts/${id}`)}
               >
                 Posts
               </GnbItem>
               <GnbItem
                 path
                 current={pathname.includes("todos")}
-                onClick={() => changeUrl("todos")}
+                onClick={() => navigator(`todos/${id}`)}
               >
                 Todos
               </GnbItem>
               <GnbItem
                 path
                 current={pathname.includes("albums")}
-                onClick={() => changeUrl("albums")}
+                onClick={() => navigator(`albums/${id}`)}
               >
                 Albums
               </GnbItem>
