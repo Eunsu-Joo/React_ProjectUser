@@ -26,7 +26,7 @@ export const DeleteBtn = ({ id }) => {
         DELETE
       </button>
       {open && (
-        <Modal onClose={closeModal}>
+        <Modal onClose={closeModal} goHome={true} type="alert">
           {error
             ? "Find Error! Check your console"
             : "Thank you . Success Delete!"}

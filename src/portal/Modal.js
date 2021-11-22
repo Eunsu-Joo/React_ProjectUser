@@ -13,7 +13,7 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
-  display:flex;
+  display: flex;
 `;
 const Alert = styled.div`
   width: 500px;
@@ -39,24 +39,60 @@ const iconStyle = {
   top: `1rem`,
   right: `1rem`,
   cursor: `pointer`,
+  fontSize: `26px`,
 };
-export const Modal =({children,onClose}) => {
-  
-  const navigator= useNavigate();
-  const handleClose= () => {
-    onClose()
-    // navigator('/')
+const Album = styled.div`
+  width: 70%;
+  background-color: #fff;
+  padding: 2rem 1rem;
+  position: relative;
+  height: 600px;
+  overflow: auto;
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
   }
-    return (
-        <Portal>
-            <ModalContainer>
-            <Alert>
-          <GrClose style={iconStyle} onClick={handleClose} />
-          <p>
-            {children}
-          </p>
-        </Alert>
-            </ModalContainer>
-        </Portal>
-    )
-}
+  .imgContainer {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-top: 1.5rem;
+  }
+`;
+export const Modal = ({ children, onClose, goHome, type }) => {
+  const navigator = useNavigate();
+  const closeModal = () => {
+    onClose();
+  };
+  const closeToHome = () => {
+    navigator("/");
+    onClose();
+  };
+  return (
+    <Portal>
+      <ModalContainer>
+        {type === "alert" ? (
+          <Alert>
+            <GrClose
+              style={iconStyle}
+              onClick={goHome ? closeToHome : closeModal}
+            />
+            <p>{children}</p>
+          </Alert>
+        ) : (
+          <Album>
+            <GrClose
+              style={iconStyle}
+              onClick={goHome ? closeToHome : closeModal}
+            />
+            <div className="imgContainer">{children}</div>
+          </Album>
+        )}
+      </ModalContainer>
+    </Portal>
+  );
+};
