@@ -1,8 +1,9 @@
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react/cjs/react.development";
 import styled from "styled-components";
-import { AlbumModal } from "./Modal";
-import Error from "./Error";
 import axios from "axios";
+import { Modal } from "portal/Modal";
+import useModal from "hooks/useModal";
+import PhotoItem from "./PhotoItem";
 const AlbumItem = styled.div`
   cursor: pointer;
   position: relative;
@@ -44,32 +45,32 @@ const AlbumItem = styled.div`
 `;
 
 export default ({ data }) => {
-  const { userId, title, id } = data;
-  const [isVisible, setIsVisible] = useState(false);
+  const { userId, title, userId: id } = data;
   const [photoData, setPhotoData] = useState(null);
   const [isSend, setIsSend] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(null);
-
-  const sendRequest = async () => {
-    setIsVisible(true);
-    if (isSend) return;
-    setIsSend(true);
-    try {
-      const { data } = await axios.get(
-        `https://jsonplaceholder.typicode.com/photos?albumId=${id}`
-      );
-      setPhotoData(data);
-      console.log(data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsError(error);
-    }
+  const [error, setError] = useState(null);
+  const { open, onOpenModal, closeModal } = useModal();
+  const handleRequest = () => {
+    onOpenModal(!open);
+    if (isSend) return false;
+    sandRequest();
   };
-
+  const sandRequest = async () => {
+    console.log(id);
+    await axios
+      .get(`https://jsonplaceholder.typicode.com/photos?albumId=${id}`)
+      .then((res) => setPhotoData(res.data))
+      .then(() => {
+        setIsSend(true);
+        setIsLoading(false);
+      })
+      .catch((error) => setError(error));
+  };
+  useEffect(() => sandRequest, []);
   return (
     <>
-      <AlbumItem onClick={sendRequest}>
+      <AlbumItem onClick={handleRequest}>
         <div className="imgBox">
           <img
             src={process.env.PUBLIC_URL + `/images/photo${userId}.png`}
@@ -83,15 +84,20 @@ export default ({ data }) => {
           <h4>{title}</h4>
         </div>
       </AlbumItem>
-      {isSend && (
-        <AlbumModal
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
-          data={photoData}
-          isLoading={isLoading}
-        />
+      {open && (
+        <Modal onClose={closeModal}>
+          {isLoading ? (
+            <p>Loading..</p>
+          ) : (
+            photoData.map((photo) => <PhotoItem data={photo} key={photo.id} />)
+          )}
+        </Modal>
       )}
-      {isError && <Error />}
+      {error && (
+        <Modal type="alert" onClose={closeModal}>
+          Find Error! Check your console
+        </Modal>
+      )}
     </>
   );
 };
