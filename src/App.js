@@ -31,6 +31,7 @@ function App() {
 
   return (
     <>
+      {error && <Error />}
       {isLoading ? (
         <Loading />
       ) : (
@@ -50,7 +51,6 @@ function App() {
           <Footer />
         </>
       )}
-      {error && <Error />}
     </>
   );
 }

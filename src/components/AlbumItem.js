@@ -45,7 +45,6 @@ const AlbumItem = styled.div`
     }
   }
 `;
-
 export default ({ data }) => {
   const { userId, title, id } = data;
   const [photoData, setPhotoData] = useState(null);
@@ -68,7 +67,6 @@ export default ({ data }) => {
       })
       .catch((error) => setError(error));
   };
-
   return (
     <>
       <AlbumItem onClick={handleClick}>

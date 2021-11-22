@@ -1,10 +1,12 @@
-import React,{ useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import UserItem from "components/UserItem";
 import styles from "./Home.module.css";
 import { UserContext } from "context/UserContext";
 export default () => {
   const [input, setInput] = useState("");
-  const {state:{data}}=useContext(UserContext);
+  const {
+    state: { data },
+  } = useContext(UserContext);
   const searchData = data.filter((user) => {
     if (input === "") {
       return user;

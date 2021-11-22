@@ -140,8 +140,3 @@ export default ({ post }) => {
     </>
   );
 };
-
-/** 1. useRef(true) => 랜더링에 안걸리게 하려고
- *  2. useEffect 로 isMount false로 바꿈.
- *  3.
- */

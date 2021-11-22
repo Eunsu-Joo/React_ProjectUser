@@ -15,6 +15,7 @@ export default () => {
 
   return (
     <section className={styles.container}>
+      {error && <Error />}
       {isLoading ? (
         <Loading />
       ) : (
@@ -53,7 +54,6 @@ export default () => {
           </article>
         </>
       )}
-      {error && <Error />}
     </section>
   );
 };
