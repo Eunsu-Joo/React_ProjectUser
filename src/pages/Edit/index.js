@@ -3,7 +3,7 @@ import { ReviseBtn } from "components/Btn";
 import { useParams } from "react-router";
 import { useInput } from "hooks/useInput";
 import { useContext, useState } from "react";
-import { matchUser } from "common/common";
+
 import { Modal } from "portal/Modal";
 import { UsersContext } from "context/UserContext";
 import useModal from "hooks/useModal";
@@ -17,7 +17,9 @@ export default () => {
     state: { data: users },
   } = useContext(UsersContext);
   const { id } = useParams();
-  const { username: currentUser } = matchUser(users, id);
+  const { username: currentUser } = users.find(
+    (user) => user.id === parseInt(id)
+  );
   const [data, onChange] = useInput({
     name: "",
     username: currentUser,

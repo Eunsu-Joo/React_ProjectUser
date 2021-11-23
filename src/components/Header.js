@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { TiUserOutline } from "react-icons/ti";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { matchUser } from "common/common";
-import { useContext } from "react";
-import { UsersContext } from "context/UserContext";
 const MainHeader = styled.header`
   width: 100%;
   height: 60px;
@@ -54,48 +51,45 @@ const greeting = {
 export default () => {
   const { pathname } = useLocation();
   const navigator = useNavigate();
-  let id = parseInt(pathname.slice(-1));
-  if (id === 0) {
-    id = id + 10;
-  }
-  const {
-    state: { data },
-  } = useContext(UsersContext);
-  const { username } = matchUser(data, id);
+  const user = JSON.parse(window.localStorage.getItem(`user`));
+  const onClear = () => {
+    navigator("/");
+    window.localStorage.clear();
+  };
   return (
     <MainHeader>
       <Nav className="container">
-        <Logo onClick={() => navigator("/")}>
+        <Logo onClick={onClear}>
           <img src={process.env.PUBLIC_URL + "/images/logo.png"} alt="" />
         </Logo>
-        {id ? (
+        {user ? (
           <>
             <Gnb>
               <GnbItem
                 path
                 current={pathname.includes("posts")}
-                onClick={() => navigator(`posts/${id}`)}
+                onClick={() => navigator(`posts/${user.id}`)}
               >
                 Posts
               </GnbItem>
               <GnbItem
                 path
                 current={pathname.includes("todos")}
-                onClick={() => navigator(`todos/${id}`)}
+                onClick={() => navigator(`todos/${user.id}`)}
               >
                 Todos
               </GnbItem>
               <GnbItem
                 path
                 current={pathname.includes("albums")}
-                onClick={() => navigator(`albums/${id}`)}
+                onClick={() => navigator(`albums/${user.id}`)}
               >
                 Albums
               </GnbItem>
             </Gnb>
             <User>
               <TiUserOutline style={icon} />
-              Welcome <span style={greeting}>{username}</span>
+              Welcome <span style={greeting}>{user.username}</span>
             </User>
           </>
         ) : (

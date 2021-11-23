@@ -16,8 +16,8 @@ const PhotoItem = styled.div`
   }
 `;
 
-export default ({ data }) => {
-  const { title, url } = data;
+export default ({ photo }) => {
+  const { title, url } = photo;
   return (
     <PhotoItem>
       <div className="imgBox">
