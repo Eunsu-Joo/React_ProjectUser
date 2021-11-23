@@ -1,7 +1,7 @@
 import { useReducer } from "react";
-import { UsersContext, UserReducer, PersonContext } from "./UserContext";
+import { UsersContext, UserReducer } from "./UserContext";
 
-export const UsersState = ({ children }) => {
+const UsersState = ({ children }) => {
   const initialState = {
     data: {},
     isLoading: true,
@@ -14,16 +14,5 @@ export const UsersState = ({ children }) => {
     </UsersContext.Provider>
   );
 };
-export const PersonState = ({ children }) => {
-  const initialState = {
-    data: {},
-    isLoading: true,
-    error: null,
-  };
-  const [state, dispatch] = useReducer(UserReducer, initialState);
-  return (
-    <PersonContext.Provider value={{ state: state, dispatch: dispatch }}>
-      {children}
-    </PersonContext.Provider>
-  );
-};
+
+export default UsersState;

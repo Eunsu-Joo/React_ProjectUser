@@ -1,4 +1,4 @@
-import { UsersState } from "context/UserState";
+import UsersState from "context/userState";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
