@@ -70,6 +70,7 @@ export const Modal = ({ children, onClose, goHome, type }) => {
   };
   const closeToHome = () => {
     navigator("/");
+    window.localStorage.clear();
     onClose();
   };
   return (

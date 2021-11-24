@@ -88,7 +88,7 @@ export default ({ data }) => {
           {isLoading ? (
             <p>Loading..</p>
           ) : (
-            photoData.map((photo) => <PhotoItem data={photo} key={photo.id} />)
+            photoData.map((photo) => <PhotoItem photo={photo} key={photo.id} />)
           )}
         </Modal>
       )}

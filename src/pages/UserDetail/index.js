@@ -1,5 +1,5 @@
 import styles from "./User.module.css";
-import { DeleteBtn, ReviseBtn } from "components/Btn";
+import { DeleteBtn, DeleteDataBtn, ReviseBtn } from "components/Btn";
 
 export default () => {
   const user = JSON.parse(window.localStorage.getItem(`user`));
@@ -26,7 +26,7 @@ export default () => {
           </p>
           <p>Company: {user.company.name} </p>
           <div className={styles.btns}>
-            <DeleteBtn id={user.id} />
+            <DeleteBtn id={user.id} api={true} />
             <ReviseBtn url={true} id={user.id} />
           </div>
         </div>

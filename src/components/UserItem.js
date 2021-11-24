@@ -53,12 +53,12 @@ const User = styled.div`
   }
 `;
 
-export default ({ data }) => {
-  const { name, username, email, company, website, phone, id } = data;
+export default ({ user, onDelete }) => {
+  const { name, username, email, company, website, phone, id } = user;
   const navigator = useNavigate();
   const handleClick = () => {
     navigator(`/user/${id}`);
-    window.localStorage.setItem(`user`, JSON.stringify(data));
+    window.localStorage.setItem(`user`, JSON.stringify(user));
   };
 
   return (
@@ -75,7 +75,7 @@ export default ({ data }) => {
       <p>Phone : {phone}</p>
       <p>Website : {website}</p>
       <div className="btns">
-        <DeleteBtn id={id} />
+        <DeleteBtn id={id} onDelete={onDelete} />
         <ReviseBtn url={true} id={id} />
       </div>
     </User>

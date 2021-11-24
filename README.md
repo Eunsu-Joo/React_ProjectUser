@@ -6,8 +6,6 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 
 ## 🔸 Packages
 
-<hr />
-
 ```javascript
   "name": "react_project_users",
   "dependencies": {
@@ -31,8 +29,6 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 - `name.module.css`를 사용할때는 `styles`를 import 해서 사용해야 한다.
 
 ## 🔸 Config
-
-<hr />
 
 ### 🔹public
 
@@ -81,9 +77,19 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 - `App.js`
 - `index.js`
 
-## 🔸 Explanation
+## 🔸 Api
 
-<hr>
+### 🔹 Get Api Data
+
+- Users / method : `GET`
+
+### 🔹 Request Api Data
+
+- Delete / method : `DELETE` / query : `false`
+- Create / method : `PUT` / query : `true`
+- Update / method : `POST` / query : `true`
+
+## 🔸 Explanation
 
 ### 🔹 index.js
 
@@ -121,13 +127,13 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 #### ◾ Btn.js
 
 - 공통으로 들어가는 DeleteBtn, ReviseBtn 각각 export 해줌.
-- DeleteBtn : `param= id` , `deleteApi` 전송
-- ReviseBtn : `param= id`, `url` `url=true`이면 url 이동
+- DeleteBtn : `param= id , api, onDelete` `api=true`이면 api전송, false면 onDelete 실행
+- ReviseBtn : `param= id, url ` 이면 url 이동
 
 #### ◾ UserItem.js
 
 - Parent : `pages/UserDetail/index.js`
-- Parameter : `data`
+- Parameter : `user,onDelete`
 - execute api : `false`
 
 #### ◾ PostItem.js
@@ -167,6 +173,7 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 - 전역 state로 데이터 받아와서 뿌려줌.
 - LocalStorage Clear
 - 검색기능
+- 유저카드 클릭하면 해당 유저카드 삭제
 
 #### ◾ UserDetail
 
@@ -231,8 +238,6 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 
 ## 🔸 Weakness
 
-<hr>
-
 🔹 **UseEffect, Mount/UnMount Component**
 
 🔹 **Handling and Module Data**
@@ -240,8 +245,6 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 🔹 **Event Handling**
 
 ## 🔸 Conclusion
-
-<hr>
 
 프로젝트를 하면서 많이 배웠고, 무엇보다 리액트에 대한 컴포넌트 분리와 플로우에 대해서 조금은 안 것 같다. 하지만 아직 브라우저 최적화와 useEffect를 이용해 데이터 처리하는 부분이 미숙하다. event 처리 부분과 useEffect의 관계성에 대해서 공부를 해야 좀 더 효율적으로 리액트를 사용 할 수 있을 것 같다. 다음 프로젝트는 조금 더 성장하길! <br>
 `Keep up the good work.`

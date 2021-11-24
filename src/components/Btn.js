@@ -8,10 +8,10 @@ const style = {
   marginRight: "24px",
 };
 
-export const DeleteBtn = ({ id }) => {
+export const DeleteBtn = ({ id, api, onDelete }) => {
   const { open, onOpenModal, closeModal } = useModal();
   const [error, setError] = useState(null);
-  const onDelete = async () => {
+  const onDeleteData = async () => {
     await axios
       .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then(() => onOpenModal(!open))
@@ -20,9 +20,16 @@ export const DeleteBtn = ({ id }) => {
         onOpenModal(!open);
       });
   };
+  const onDeleteCard = () => {
+    onDelete(id);
+  };
   return (
     <>
-      <button className="btn" onClick={onDelete} style={style}>
+      <button
+        className="btn"
+        onClick={api ? onDeleteData : onDeleteCard}
+        style={style}
+      >
         DELETE
       </button>
       {open && (
@@ -35,7 +42,6 @@ export const DeleteBtn = ({ id }) => {
     </>
   );
 };
-
 export const ReviseBtn = ({ url, id }) => {
   const navigator = useNavigate();
   const changeUrl = () => {

@@ -3,17 +3,21 @@ import UserItem from "components/UserItem";
 import styles from "./Home.module.css";
 import { UsersContext } from "context/UserContext";
 export default () => {
-  const [input, setInput] = useState("");
   const {
     state: { data },
   } = useContext(UsersContext);
-  const searchData = data.filter((user) => {
+  const [input, setInput] = useState("");
+  const [users, setUsers] = useState(data);
+  const searchData = users.filter((user) => {
     if (input === "") {
       return user;
     } else if (user.name.toLowerCase().includes(input)) {
       return user;
     }
   });
+  const onDelete = (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  };
   return (
     <>
       <section className={styles.container}>
@@ -34,7 +38,9 @@ export default () => {
             {searchData.length === 0 ? (
               <li className={styles.noResult}>No Result</li>
             ) : (
-              searchData.map((user) => <UserItem data={user} key={user.id} />)
+              searchData.map((user) => (
+                <UserItem onDelete={onDelete} user={user} key={user.id} />
+              ))
             )}
           </div>
         </article>

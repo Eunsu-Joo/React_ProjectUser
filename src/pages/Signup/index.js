@@ -10,6 +10,7 @@ const axios = require("axios").default;
 export default () => {
   const { open, onOpenModal, closeModal } = useModal();
   const [apiError, setApiError] = useState(null);
+  const [valid, setValid] = useState(null);
   const [error, setError] = useState(null);
   const [data, onChange] = useInput({
     name: "",
@@ -18,7 +19,7 @@ export default () => {
     website: "",
     email: "",
   });
-  const { formValid, errors } = validator(data);
+  let { formValid, errors } = validator(data);
   const {
     state: { data: users },
   } = useContext(UsersContext);
@@ -29,15 +30,21 @@ export default () => {
     const upperCaseValue = value.replace(/\b[a-z]/, (letter) =>
       letter.toUpperCase()
     );
-    if (usernames.includes(value) || usernames.includes(upperCaseValue)) {
+    if (usernames.includes(value)) {
+      setValid(formValid);
       alert("다른아이디를 사용해주세요");
       ref.current = false;
     } else if (!value) {
+      setValid(formValid);
       alert("값을 입력해주세요");
       ref.current = false;
     } else if (!value.match(/^[a-zA-Z0-9]*$/)) {
+      setValid(formValid);
       alert("영문 혹은 영문+숫자만 가능합니다.");
       ref.current = false;
+    } else if (usernames.includes(upperCaseValue)) {
+      setValid(formValid);
+      alert("다른아이디를 사용해주세요");
     } else {
       alert("사용할 수 있는 아이디입니다.");
       ref.current = false;
@@ -47,10 +54,12 @@ export default () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(errors);
+    setValid(formValid);
+    console.log(valid);
     if (ref.current) {
       return alert("중복확인을 해주세요");
     }
-    if (formValid) {
+    if (valid) {
       await axios
         .post("https://jsonplaceholder.typicode.com/users", data)
         .then(() => {
@@ -60,6 +69,8 @@ export default () => {
           onOpenModal(true);
           setApiError(error);
         });
+    } else {
+      return false;
     }
   };
 
