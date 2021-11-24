@@ -128,7 +128,7 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 
 - 공통으로 들어가는 DeleteBtn, ReviseBtn 각각 export 해줌.
 - DeleteBtn : `param= id , api, onDelete` `api=true`이면 api전송, false면 onDelete 실행
-- ReviseBtn : `param= id, url ` 이면 url 이동
+- ReviseBtn : `param= id, url, onCreateLocal ` 이면 url 이동
 
 #### ◾ UserItem.js
 

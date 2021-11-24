@@ -56,9 +56,12 @@ const User = styled.div`
 export default ({ user, onDelete }) => {
   const { name, username, email, company, website, phone, id } = user;
   const navigator = useNavigate();
+  const onCreateLocal = () => {
+    window.localStorage.setItem(`user`, JSON.stringify(user));
+  };
   const handleClick = () => {
     navigator(`/user/${id}`);
-    window.localStorage.setItem(`user`, JSON.stringify(user));
+    onCreateLocal();
   };
 
   return (
@@ -76,7 +79,7 @@ export default ({ user, onDelete }) => {
       <p>Website : {website}</p>
       <div className="btns">
         <DeleteBtn id={id} onDelete={onDelete} />
-        <ReviseBtn url={true} id={id} />
+        <ReviseBtn url={true} id={id} onCreateLocal={onCreateLocal} />
       </div>
     </User>
   );

@@ -42,10 +42,11 @@ export const DeleteBtn = ({ id, api, onDelete }) => {
     </>
   );
 };
-export const ReviseBtn = ({ url, id }) => {
+export const ReviseBtn = ({ url, id, onCreateLocal }) => {
   const navigator = useNavigate();
   const changeUrl = () => {
     navigator(`/edit/${id}`);
+    onCreateLocal();
   };
   return (
     <button className="btn" onClick={url && changeUrl}>
