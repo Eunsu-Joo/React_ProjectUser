@@ -27,3 +27,4 @@ export const getUsers = async (dispatch) => {
       });
     });
 };
+//action function => 스토어의 변경을 일어나게 하는 액션 생성자

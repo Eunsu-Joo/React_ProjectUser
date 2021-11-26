@@ -93,7 +93,7 @@ export default ({ data }) => {
         </Modal>
       )}
       {error && (
-        <Modal type="alert" onClose={closeModal}>
+        <Modal type="alert" goHome={true}>
           Find Error! Check your console
         </Modal>
       )}

@@ -62,6 +62,7 @@
 }
 .searchBar input {
   width: 570px;
+  margin-right: 1rem;
 }
 .noResult {
   width: 1280px;

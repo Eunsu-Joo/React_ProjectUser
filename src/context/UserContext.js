@@ -1,5 +1,5 @@
 import { createContext } from "react";
-const UsersContext = createContext();
+const UsersContext = createContext(); // store
 const UserReducer = (state, action) => {
   switch (action.type) {
     case "SET_USERS":
@@ -21,5 +21,5 @@ const UserReducer = (state, action) => {
       return state;
   }
 };
-
+//dispatch
 export { UsersContext, UserReducer };

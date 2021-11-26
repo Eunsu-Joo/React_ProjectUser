@@ -1,5 +1,5 @@
 import styles from "./User.module.css";
-import { DeleteBtn, DeleteDataBtn, ReviseBtn } from "components/Btn";
+import { DeleteBtn, ReviseBtn } from "components/Btn";
 
 export default () => {
   const user = JSON.parse(window.localStorage.getItem(`user`));

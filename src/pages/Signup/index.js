@@ -55,7 +55,6 @@ export default () => {
     event.preventDefault();
     setError(errors);
     setValid(formValid);
-    console.log(valid);
     if (ref.current) {
       return alert("중복확인을 해주세요");
     }

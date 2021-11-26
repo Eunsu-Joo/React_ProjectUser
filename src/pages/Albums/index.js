@@ -2,7 +2,7 @@ import AlbumItem from "components/AlbumItem";
 import Loading from "components/Loading";
 import styles from "./Albums.module.css";
 import Error from "components/Error";
-import {useFetch } from "hooks/useAsync";
+import { useFetch } from "hooks/useAsync";
 import { useParams } from "react-router";
 export default () => {
   const { id } = useParams();

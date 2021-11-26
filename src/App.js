@@ -15,21 +15,22 @@ import Error from "components/Error";
 import ScrollToTop from "common/ScrollToTop";
 import { UsersContext } from "context/UserContext";
 import { getUsers } from "context/UserAction";
+import useStore from "store/default";
+import { Api } from "api/Api";
 function App() {
-  const {
-    state: { isLoading, error },
-    dispatch,
-  } = useContext(UsersContext);
+  const { data, isLoading, error, fetch } = useStore();
   useEffect(() => {
     const getUsersInfo = async () => {
-      await getUsers(dispatch);
+      await fetch(`https://jsonplaceholder.typicode.com/users`);
     };
     getUsersInfo();
   }, []);
-
+  console.log(data);
   return (
     <>
-      {error && <Error />}
+      <GlobalStyles />
+      {isLoading ? <p>Loading</p> : <Home />}
+      {/* {error && <Error />}
       {isLoading ? (
         <Loading />
       ) : (
@@ -48,7 +49,7 @@ function App() {
           </Routes>
           <Footer />
         </>
-      )}
+      )} */}
     </>
   );
 }

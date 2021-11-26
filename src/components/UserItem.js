@@ -53,7 +53,7 @@ const User = styled.div`
   }
 `;
 
-export default ({ user, onDelete }) => {
+export default ({ user }) => {
   const { name, username, email, company, website, phone, id } = user;
   const navigator = useNavigate();
   const onCreateLocal = () => {
@@ -78,7 +78,7 @@ export default ({ user, onDelete }) => {
       <p>Phone : {phone}</p>
       <p>Website : {website}</p>
       <div className="btns">
-        <DeleteBtn id={id} onDelete={onDelete} />
+        <DeleteBtn id={id} />
         <ReviseBtn url={true} id={id} onCreateLocal={onCreateLocal} />
       </div>
     </User>

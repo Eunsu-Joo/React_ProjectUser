@@ -4,6 +4,7 @@ import CommentItem from "./CommentItem";
 import { useInput } from "hooks/useInput";
 import Error from "./Error";
 import axios from "axios";
+import { Modal } from "portal/Modal";
 const PostItem = styled.div`
   margin-bottom: 1rem;
   background-color: #e9e9e9;
@@ -125,6 +126,7 @@ export default ({ post }) => {
           <span className="comment" onClick={sendRequest}>
             Show Comments
           </span>
+
           {isLoading
             ? null
             : data.map((comment) => (
@@ -134,9 +136,13 @@ export default ({ post }) => {
                   isCheck={isCheck}
                 />
               ))}
+          {isError && (
+            <Modal goHome={true} type="alert">
+              Find Error! Check your Console!
+            </Modal>
+          )}
         </div>
       </PostItem>
-      {isError && <Error />}
     </>
   );
 };
