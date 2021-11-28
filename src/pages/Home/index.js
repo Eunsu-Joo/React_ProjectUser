@@ -2,18 +2,11 @@ import React, { useContext, useState } from "react";
 import UserItem from "components/UserItem";
 import styles from "./Home.module.css";
 import useStore from "store/default";
-
+import shallow from 'zustand/shallow'
 export default () => {
-  const { data } = useStore();
+  const  data  = useStore(state => state.data,shallow);
   const [input, setInput] = useState("");
-  const [users, setUsers] = useState(data);
-  const searchData = users.filter((user) => {
-    if (input === "") {
-      return user;
-    } else if (user.name.toLowerCase().includes(input)) {
-      return user;
-    }
-  });
+
 
   return (
     <>
@@ -32,13 +25,9 @@ export default () => {
             />
           </div>
           <div className={styles.userContainer}>
-            {/* {searchData.length === 0 ? (
-              <li className={styles.noResult}>No Result</li>
-            ) : ( */}
-            {data.map((user) => (
-              <UserItem user={user} key={user.id} />
-            ))}
-            {/* )} */}
+    
+{              data.map(user => <UserItem user={user} key={user.id} />)
+}          
           </div>
         </article>
       </section>
