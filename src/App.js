@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router";
 import GlobalStyles from "components/GlobalStyles";
 import Header from "components/Header";
@@ -13,10 +13,7 @@ import Footer from "components/Footer";
 import Loading from "components/Loading";
 import Error from "components/Error";
 import ScrollToTop from "common/ScrollToTop";
-import { UsersContext } from "context/UserContext";
-import { getUsers } from "context/UserAction";
 import useStore from "store/default";
-import { Api } from "api/Api";
 function App() {
   const { data, isLoading, error, fetch } = useStore();
   useEffect(() => {
@@ -25,12 +22,11 @@ function App() {
     };
     getUsersInfo();
   }, []);
-  console.log(data);
   return (
     <>
       <GlobalStyles />
-      {isLoading ? <p>Loading</p> : <Home />}
-      {/* {error && <Error />}
+
+      {error && <Error />}
       {isLoading ? (
         <Loading />
       ) : (
@@ -49,7 +45,7 @@ function App() {
           </Routes>
           <Footer />
         </>
-      )} */}
+      )}
     </>
   );
 }
