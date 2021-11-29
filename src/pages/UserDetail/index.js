@@ -2,7 +2,6 @@ import styles from "./User.module.css";
 import { DeleteBtn, ReviseBtn } from "components/Btn";
 export default () => {
   const user = JSON.parse(window.localStorage.getItem(`user`));
-  console.log(user);
   const { name, username, phone, email, website, id } = user;
   return (
     <section className={styles.container}>

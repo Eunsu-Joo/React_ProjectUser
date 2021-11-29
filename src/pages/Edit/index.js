@@ -17,7 +17,6 @@ export default () => {
     (user) => user.id === parseInt(id)
   );
 
-  console.log(currentUser);
   const [data, onChange] = useInput({
     name: "",
     username: currentUser,
