@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Portal from "./Portal";
-import { GrClose } from "react-icons/gr";
-import { useNavigate } from "react-router";
+
+import { createPortal } from "react-dom";
+import useLockBodyScroll from "hooks/useLockBodyScroll";
 const ModalContainer = styled.div`
   position: fixed;
   top: 0;
@@ -15,32 +15,6 @@ const ModalContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
 `;
-const Alert = styled.div`
-  width: 500px;
-  height: 200px;
-  padding: 0 40px;
-  background-color: #fff;
-  position: relative;
-  display: flex;
-
-  justify-content: center;
-  flex-direction: column;
-  p {
-    font-size: 1.2rem;
-    font-weight: 600;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-`;
-const iconStyle = {
-  color: `#555`,
-  position: `absolute`,
-  top: `1rem`,
-  right: `1rem`,
-  cursor: `pointer`,
-  fontSize: `26px`,
-};
 const Album = styled.div`
   width: 70%;
   background-color: #fff;
@@ -63,19 +37,16 @@ const Album = styled.div`
     padding-top: 1.5rem;
   }
 `;
-export const Modal = ({ children, onClose, goHome, type }) => {
-  const navigator = useNavigate();
-  const closeModal = () => {
-    onClose();
-  };
-  const closeToHome = () => {
-    navigator("/");
-    window.localStorage.clear();
-  };
+const Portal = ({ children }) => {
+  let modalRoot = document.getElementById("modal");
+  return createPortal(children, modalRoot);
+};
+export const Modal = ({ children }) => {
+  useLockBodyScroll();
   return (
     <Portal>
       <ModalContainer>
-        {type === "alert" ? (
+        {/* {type === "alert" ? (
           <Alert>
             <GrClose
               style={iconStyle}
@@ -91,7 +62,8 @@ export const Modal = ({ children, onClose, goHome, type }) => {
             />
             <div className="imgContainer">{children}</div>
           </Album>
-        )}
+        )} */}
+        {children}
       </ModalContainer>
     </Portal>
   );
