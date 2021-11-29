@@ -14,7 +14,7 @@
   z-index: -1;
 }
 .article:before {
-  left: 55%;
+  right: 25%;
   height: 25vh;
   bottom: -100px;
 }
