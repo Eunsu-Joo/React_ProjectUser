@@ -17,8 +17,9 @@ const User = styled.div`
   overflow: hidden;
   h3 {
     font-size: 1.5rem;
-    font-family: "Playfair Display", serif;
+    font-family: "Do Hyeon", sans-serif;
     margin: 0.5em 0 0.3em;
+    letter-spacing: 1px;
   }
   p {
     line-height: 1.2;
@@ -53,8 +54,8 @@ const User = styled.div`
   }
 `;
 
-export default ({ user }) => {
-  const { name, username, email, company, website, phone, id } = user;
+export default ({ user, num }) => {
+  const { name, username, email, website, phone, id } = user;
   const navigator = useNavigate();
   const onCreateLocal = () => {
     window.localStorage.setItem(`user`, JSON.stringify(user));
@@ -67,19 +68,22 @@ export default ({ user }) => {
   return (
     <User>
       <div className="imgBox" onClick={handleClick}>
-        <img src={process.env.PUBLIC_URL + `/images/user${id}.jpg`} alt="" />
+        <img
+          src={process.env.PUBLIC_URL + `/images/user${id > 10 ? num : id}.jpg`}
+          alt=""
+        />
       </div>
       <h3>
         {name} / {username}
       </h3>
+      <p> ID : {id}</p>
       <p> Email : {email}</p>
-      <p>Company : {company.name}</p>
       <h4>Contact Me</h4>
       <p>Phone : {phone}</p>
       <p>Website : {website}</p>
       <div className="btns">
         <DeleteBtn id={id} />
-        <ReviseBtn url={true} id={id} onCreateLocal={onCreateLocal} />
+        <ReviseBtn id={id} onCreateLocal={onCreateLocal} />
       </div>
     </User>
   );
