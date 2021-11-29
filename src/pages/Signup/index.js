@@ -1,16 +1,12 @@
 import styles from "./Signup.module.css";
 import { useRef, useState } from "react";
-import { useContext } from "react";
 import useModal from "hooks/useModal";
-import { Modal } from "portal/Modal";
-import { UsersContext } from "context/UserContext";
 import { useInput } from "hooks/useInput";
 import validator from "common/validator";
-const axios = require("axios").default;
+import useStore from "store/default";
+import UpdateModal from "portal/UpdateModal";
 export default () => {
   const { open, onOpenModal, closeModal } = useModal();
-  const [apiError, setApiError] = useState(null);
-  const [valid, setValid] = useState(null);
   const [error, setError] = useState(null);
   const [data, onChange] = useInput({
     name: "",
@@ -20,9 +16,7 @@ export default () => {
     email: "",
   });
   let { formValid, errors } = validator(data);
-  const {
-    state: { data: users },
-  } = useContext(UsersContext);
+  const { data: users } = useStore((state) => state);
   const usernames = users.map((user) => user.username);
   const ref = useRef();
   const onCheckUser = () => {
@@ -31,45 +25,31 @@ export default () => {
       letter.toUpperCase()
     );
     if (usernames.includes(value)) {
-      setValid(formValid);
       alert("다른아이디를 사용해주세요");
       ref.current = false;
     } else if (!value) {
-      setValid(formValid);
       alert("값을 입력해주세요");
       ref.current = false;
     } else if (!value.match(/^[a-zA-Z0-9]*$/)) {
-      setValid(formValid);
       alert("영문 혹은 영문+숫자만 가능합니다.");
       ref.current = false;
     } else if (usernames.includes(upperCaseValue)) {
-      setValid(formValid);
       alert("다른아이디를 사용해주세요");
+      ref.current = false;
     } else {
       alert("사용할 수 있는 아이디입니다.");
       ref.current = false;
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setError(errors);
-    setValid(formValid);
     if (ref.current) {
       return alert("중복확인을 해주세요");
     }
-    if (valid) {
-      await axios
-        .post("https://jsonplaceholder.typicode.com/users", data)
-        .then(() => {
-          onOpenModal(true);
-        })
-        .catch((error) => {
-          onOpenModal(true);
-          setApiError(error);
-        });
-    } else {
-      return false;
+    if (formValid) {
+      return onOpenModal(!open);
     }
   };
 
@@ -145,11 +125,9 @@ export default () => {
           </div>
         </article>
         {open && (
-          <Modal onClose={closeModal} goHome={true} type="alert">
-            {apiError
-              ? "Find Error! Check your console"
-              : "Success Create Account!"}
-          </Modal>
+          <UpdateModal onClose={closeModal} data={data} enroll={true}>
+            Are you shall create your account?
+          </UpdateModal>
         )}
       </form>
     </section>

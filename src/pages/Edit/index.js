@@ -2,24 +2,22 @@ import styles from "./Edit.module.css";
 import { ReviseBtn } from "components/Btn";
 import { useParams } from "react-router";
 import { useInput } from "hooks/useInput";
-import { useContext, useState } from "react";
-
-import { Modal } from "portal/Modal";
-import { UsersContext } from "context/UserContext";
+import { useState } from "react";
 import useModal from "hooks/useModal";
 import validator from "common/validator";
-const axios = require("axios").default;
+import useStore from "store/default";
+import UpdateModal from "portal/UpdateModal";
+
 export default () => {
-  const [error, setError] = useState(null);
-  const [apiError, setApiError] = useState(null);
   const { open, onOpenModal, closeModal } = useModal();
-  const {
-    state: { data: users },
-  } = useContext(UsersContext);
+  const { data: users } = useStore((state) => state);
+  const [error, setError] = useState(null);
   const { id } = useParams();
   const { username: currentUser } = users.find(
     (user) => user.id === parseInt(id)
   );
+
+  console.log(currentUser);
   const [data, onChange] = useInput({
     name: "",
     username: currentUser,
@@ -28,26 +26,25 @@ export default () => {
     email: "",
   });
   const { formValid, errors } = validator(data);
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setError(errors);
     if (formValid) {
-      await axios
-        .put(`https://jsonplaceholder.typicode.com/users/${id}`, data)
-        .then(() => {
-          onOpenModal(true);
-        })
-        .catch((error) => {
-          onOpenModal(true);
-          setApiError(error);
-        });
+      onOpenModal(!open);
     }
   };
+
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit}>
         <div className={styles.imgBox}>
-          <img src={process.env.PUBLIC_URL + `/images/user${id}.jpg`} alt="" />
+          <img
+            src={
+              process.env.PUBLIC_URL +
+              `/images/user${id > 10 ? Math.ceil(Math.random() * 9) : id}.jpg`
+            }
+            alt=""
+          />
         </div>
         <article className={styles.article}>
           <div className={styles.desc}>
@@ -114,11 +111,9 @@ export default () => {
         </article>
       </form>
       {open && (
-        <Modal goHome={true} type="alert">
-          {apiError
-            ? "Find Error! Check your console"
-            : "Success Update Your Information!"}
-        </Modal>
+        <UpdateModal onClose={closeModal} id={id} data={data}>
+          Are you shall update your information?
+        </UpdateModal>
       )}
     </section>
   );
