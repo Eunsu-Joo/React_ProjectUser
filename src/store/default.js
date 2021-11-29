@@ -24,7 +24,10 @@ const useStore = create((set, get) => ({
   },
   update: (info, id) => {
     const { data } = get((state) => state);
-    set({ data: [...data, { ...info, id: id }] });
+    const newData = data.map((user) =>
+      user.id === parseInt(id) ? { ...user, ...info } : user
+    );
+    set({ data: newData });
   },
 }));
 
