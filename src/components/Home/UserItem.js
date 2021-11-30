@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { DeleteBtn, ReviseBtn } from "./Btn";
+import { DeleteBtn, ReviseBtn } from "../Common/Btn";
 
 const User = styled.div`
   width: 100%;
@@ -54,7 +54,7 @@ const User = styled.div`
   }
 `;
 
-export default ({ user, num }) => {
+export default ({ user }) => {
   const { name, username, email, website, phone, id } = user;
   const navigator = useNavigate();
   const onCreateLocal = () => {
@@ -69,7 +69,9 @@ export default ({ user, num }) => {
     <User>
       <div className="imgBox" onClick={handleClick}>
         <img
-          src={process.env.PUBLIC_URL + `/images/user${id > 10 ? num : id}.jpg`}
+          src={
+            process.env.PUBLIC_URL + `/images/user${id > 10 ? id - 10 : id}.jpg`
+          }
           alt=""
         />
       </div>

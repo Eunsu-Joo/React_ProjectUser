@@ -2,10 +2,10 @@ import styles from "./Todos.module.css";
 import { useState } from "react";
 import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { useParams } from "react-router";
-import { useFetch } from "hooks/useAsync";
-import Loading from "components/Loading";
-import Error from "components/Error";
-import TodoItem from "components/TodoItem";
+import useFetch from "hooks/useAsync";
+import Error from "components/Common/Error";
+import Loading from "components/Common/Loading";
+import TodoItem from "components/Todos/TodoItem";
 
 export default () => {
   const [isCheck, setIsCheck] = useState(false);

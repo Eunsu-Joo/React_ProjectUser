@@ -1,7 +1,7 @@
 import styles from "./Edit.module.css";
-import { ReviseBtn } from "components/Btn";
+import { ReviseBtn } from "components/Common/Btn";
 import { useParams } from "react-router";
-import { useInput } from "hooks/useInput";
+import useInput from "hooks/useInput";
 import { useState } from "react";
 import useModal from "hooks/useModal";
 import validator from "common/validator";
@@ -40,7 +40,7 @@ export default () => {
           <img
             src={
               process.env.PUBLIC_URL +
-              `/images/user${id > 10 ? Math.ceil(Math.random() * 9) : id}.jpg`
+              `/images/user${id > 10 ? id - 10 : id}.jpg`
             }
             alt=""
           />

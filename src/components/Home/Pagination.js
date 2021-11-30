@@ -1,6 +1,7 @@
 import useStore from "store/default";
 import styled from "styled-components";
 import _, { range } from "lodash";
+import ScrollToTop from "common/ScrollToTop";
 const Pagination = styled.div`
   width: 300px;
   height: 30px;

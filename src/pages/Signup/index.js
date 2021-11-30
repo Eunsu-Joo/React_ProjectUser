@@ -1,7 +1,7 @@
 import styles from "./Signup.module.css";
 import { useRef, useState } from "react";
 import useModal from "hooks/useModal";
-import { useInput } from "hooks/useInput";
+import useInput from "hooks/useInput";
 import validator from "common/validator";
 import useStore from "store/default";
 import UpdateModal from "portal/UpdateModal";

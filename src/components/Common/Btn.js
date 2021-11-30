@@ -1,10 +1,6 @@
-import { useState } from "react";
-import { Modal } from "portal/Modal";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import useModal from "hooks/useModal";
-import useStore from "store/default";
-import { DeleteModal } from "portal/DeleteModal";
+import DeleteModal from "portal/DeleteModal";
 
 const style = {
   marginRight: "24px",

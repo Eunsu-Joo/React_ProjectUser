@@ -1,9 +1,9 @@
 import styles from "./Posts.module.css";
 import { useParams } from "react-router";
-import { useFetch } from "hooks/useAsync";
-import Error from "components/Error";
-import Loading from "components/Loading";
-import PostItem from "components/PostItem";
+import useFetch from "hooks/useAsync";
+import Error from "components/Common/Error";
+import Loading from "components/Common/Loading";
+import PostItem from "components/Posts/PostItem";
 
 export default () => {
   const { id } = useParams();

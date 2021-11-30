@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Modal } from "portal/Modal";
 import styled from "styled-components";
 import axios from "axios";
 import useModal from "hooks/useModal";
 import PhotoItem from "./PhotoItem";
+import AlbumModal from "portal/AlnumModal";
 const AlbumItem = styled.div`
   cursor: pointer;
   position: relative;
@@ -84,18 +84,13 @@ export default ({ data }) => {
         </div>
       </AlbumItem>
       {open && (
-        <Modal onClose={closeModal}>
+        <AlbumModal onClose={closeModal}>
           {isLoading ? (
             <p>Loading..</p>
           ) : (
             photoData.map((photo) => <PhotoItem photo={photo} key={photo.id} />)
           )}
-        </Modal>
-      )}
-      {error && (
-        <Modal type="alert" goHome={true}>
-          Find Error! Check your console
-        </Modal>
+        </AlbumModal>
       )}
     </>
   );

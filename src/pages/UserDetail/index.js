@@ -1,5 +1,5 @@
 import styles from "./User.module.css";
-import { DeleteBtn, ReviseBtn } from "components/Btn";
+import { DeleteBtn, ReviseBtn } from "components/Common/Btn";
 export default () => {
   const user = JSON.parse(window.localStorage.getItem(`user`));
   const { name, username, phone, email, website, id } = user;
@@ -10,9 +10,7 @@ export default () => {
           <img
             src={
               process.env.PUBLIC_URL +
-              `/images/user${
-                user.id > 10 ? Math.ceil(Math.random() * 9) : user.id
-              }.jpg`
+              `/images/user${user.id > 10 ? id - 10 : user.id}.jpg`
             }
             alt=""
           />
