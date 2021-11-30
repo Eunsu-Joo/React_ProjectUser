@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router";
-import GlobalStyles from "components/GlobalStyles";
-import Header from "components/Header";
+import GlobalStyles from "components/Common/GlobalStyles";
+import Header from "components/Header/Header";
 import Home from "pages/Home";
 import UserDetail from "pages/UserDetail";
 import Signup from "pages/Signup";
@@ -9,13 +9,13 @@ import Edit from "pages/Edit";
 import Todos from "pages/Todos";
 import Posts from "pages/Posts";
 import Albums from "pages/Albums";
-import Footer from "components/Footer";
-import Loading from "components/Loading";
-import Error from "components/Error";
+import Footer from "components/Common/Footer";
+import Loading from "components/Common/Loading";
+import Error from "components/Common/Error";
 import ScrollToTop from "common/ScrollToTop";
 import useStore from "store/default";
 function App() {
-  const { data, isLoading, error, fetch } = useStore();
+  const { isLoading, error, fetch } = useStore();
   useEffect(() => {
     const getUsersInfo = async () => {
       await fetch(`https://jsonplaceholder.typicode.com/users`);
@@ -25,7 +25,6 @@ function App() {
   return (
     <>
       <GlobalStyles />
-
       {error && <Error />}
       {isLoading ? (
         <Loading />
