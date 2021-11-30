@@ -1,4 +1,4 @@
-import { Modal } from "./Modal";
+import Modal from "./Modal";
 import { GrClose } from "react-icons/gr";
 import styled from "styled-components";
 import useStore from "store/default";
@@ -29,7 +29,7 @@ const iconStyle = {
   cursor: `pointer`,
   fontSize: `26px`,
 };
-export const UpdateModal = ({ onClose, children, id, data, enroll }) => {
+const UpdateModal = ({ onClose, children, id, data, enroll }) => {
   const { create, update } = useStore((state) => state);
   const navigator = useNavigate();
   const onUpdate = () => {

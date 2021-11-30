@@ -1,4 +1,4 @@
-import { Modal } from "./Modal";
+import Modal from "./Modal";
 import styled from "styled-components";
 import { GrClose } from "react-icons/gr";
 import useStore from "store/default";
@@ -28,7 +28,7 @@ const Alert = styled.div`
     margin-bottom: 2rem;
   }
 `;
-export const DeleteModal = ({ onClose, children, id }) => {
+const DeleteModal = ({ onClose, children, id }) => {
   const { remove } = useStore();
   const navigator = useNavigate();
   const onDelete = () => {
@@ -47,3 +47,5 @@ export const DeleteModal = ({ onClose, children, id }) => {
     </Modal>
   );
 };
+
+export default DeleteModal;
