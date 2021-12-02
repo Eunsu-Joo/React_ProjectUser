@@ -39,6 +39,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="/posts/:id" element={<Posts />} />
+            <Route path="/posts/:id/new" element={<Posts />} />
             <Route path="/todos/:id" element={<Todos />} />
             <Route path="albums/:id" element={<Albums />} />
           </Routes>

@@ -21,20 +21,12 @@ const PostItem = styled.div`
       font-size: 7rem;
     }
   }
-  .inputBox {
-    width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 0.5em;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    input {
-      background-color: inherit;
-      border-bottom: 1px solid #636e72;
-      border-radius: 0;
-      padding: 0;
-      width: 20%;
-    }
+  input {
+    background-color: inherit;
+    border-bottom: 1px solid #636e72;
+    border-radius: 0;
+    padding: 0;
+    width: 70%;
   }
   .contents {
     width: 70%;
@@ -43,6 +35,9 @@ const PostItem = styled.div`
       margin: 1rem 0;
       font-size: 1.2rem;
       font-weight: 700;
+    }
+    .btn {
+      margin-left: 2rem;
     }
     .comment {
       font-weight: 700;
@@ -95,34 +90,34 @@ export default ({ post }) => {
         <div className="contents">
           <h4>{title}</h4>
           <p>{body}</p>
-          <div className="inputBox">
-            <input
-              type="text"
-              placeholder="name"
-              name="name"
-              onChange={onChange}
-              value={comments.name}
-            />
-            <input
-              type="text"
-              placeholder="email"
-              name="email"
-              onChange={onChange}
-              value={comments.email}
-            />
-            <input
-              type="text"
-              placeholder="comment"
-              name="body"
-              onChange={onChange}
-              value={comments.body}
-            />
-            <button className="btn" onClick={onUpdate} disabled={!data}>
-              Comment
-            </button>
-          </div>
+
+          <input
+            type="text"
+            placeholder="name"
+            name="name"
+            onChange={onChange}
+            value={comments.name}
+          />
+          <input
+            type="text"
+            placeholder="email"
+            name="email"
+            onChange={onChange}
+            value={comments.email}
+          />
+          <input
+            type="text"
+            placeholder="comment"
+            name="body"
+            onChange={onChange}
+            value={comments.body}
+          />
+          <button className="btn" onClick={onUpdate} disabled={!data}>
+            Comment
+          </button>
+
           <span className="comment" onClick={sendRequest}>
-            Show Comments
+            {isCheck ? `Hide Comments` : `Show Comments`}
           </span>
 
           {isLoading

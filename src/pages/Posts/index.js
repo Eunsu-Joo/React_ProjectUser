@@ -1,15 +1,23 @@
 import styles from "./Posts.module.css";
-import { useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import useFetch from "hooks/useAsync";
 import Error from "components/Common/Error";
 import Loading from "components/Common/Loading";
-import PostItem from "components/Posts/PostItem";
+import PostItem from "./PostItem";
+import postsStore from "store/posts";
+import { useCallback } from "react";
+import AddPosts from "./AddPosts";
+import { useEffect, useState } from "react/cjs/react.development";
 
 export default () => {
   const { id } = useParams();
-  const { data, isLoading, error } = useFetch(
-    `https://jsonplaceholder.typicode.com/posts?userId=${id}`
-  );
+  const navigator = useNavigate();
+  const { pathname } = useLocation();
+  const { posts: data, fetchPosts, isLoading, error } = postsStore();
+  const handlePostPage = () => {
+    navigator(`/posts/${id}/new`);
+  };
+  useEffect(() => fetchPosts(id), []);
   return (
     <>
       {error && <Error />}
@@ -22,10 +30,18 @@ export default () => {
               <img src={process.env.PUBLIC_URL + `/images/user5.jpg`} alt="" />
             </div>
             <h2>Posts</h2>
+
             <div className={styles.postsContainer}>
-              {data.map((post) => (
-                <PostItem post={post} key={post.id} />
-              ))}
+              {pathname.includes("new") ? null : (
+                <span className={styles.link} onClick={handlePostPage}>
+                  Write new Post
+                </span>
+              )}
+              {pathname.includes("new") ? (
+                <AddPosts id={id} />
+              ) : (
+                data.map((post) => <PostItem post={post} key={post.id} />)
+              )}
             </div>
           </article>
         </section>

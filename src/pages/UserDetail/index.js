@@ -1,8 +1,11 @@
 import styles from "./User.module.css";
 import { DeleteBtn, ReviseBtn } from "components/Common/Btn";
+import { useNavigate } from "react-router";
+import postsStore from "store/posts";
 export default () => {
   const user = JSON.parse(window.localStorage.getItem(`user`));
   const { name, username, phone, email, website, id } = user;
+
   return (
     <section className={styles.container}>
       <article className={styles.userContainer}>

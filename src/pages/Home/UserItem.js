@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { DeleteBtn, ReviseBtn } from "../Common/Btn";
+import { DeleteBtn, ReviseBtn } from "../../components/Common/Btn";
 
 const User = styled.div`
   width: 100%;

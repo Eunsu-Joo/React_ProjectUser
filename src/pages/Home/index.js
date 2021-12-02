@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import UserItem from "components/Home/UserItem";
+import UserItem from "./UserItem";
 import styles from "./Home.module.css";
 import useStore from "store/default";
 import shallow from "zustand/shallow";
-import Pagination from "components/Home/Pagination";
+import Pagination from "components/Common/Pagination";
 import usePagination from "hooks/usePagination";
 
 export default () => {

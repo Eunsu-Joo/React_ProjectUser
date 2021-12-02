@@ -30,4 +30,16 @@
   width: 80%;
   margin: 0 auto;
   padding: 80px 0;
+  position: relative;
+}
+.link {
+  position: absolute;
+  right: 0rem;
+  top: 1.4rem;
+  padding: 0.7rem 1.5rem;
+  text-transform: uppercase;
+  background-color: #2f3640;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.1s;
 }

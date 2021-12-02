@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import useFetch from "hooks/useAsync";
 import Error from "components/Common/Error";
 import Loading from "components/Common/Loading";
-import TodoItem from "components/Todos/TodoItem";
+import TodoItem from "./TodoItem";
 
 export default () => {
   const [isCheck, setIsCheck] = useState(false);

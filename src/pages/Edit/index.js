@@ -2,7 +2,7 @@ import styles from "./Edit.module.css";
 import { ReviseBtn } from "components/Common/Btn";
 import { useParams } from "react-router";
 import useInput from "hooks/useInput";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import useModal from "hooks/useModal";
 import validator from "common/validator";
 import useStore from "store/default";
@@ -32,18 +32,30 @@ export default () => {
       onOpenModal(!open);
     }
   };
-
+  const [file, setFile] = useState("");
+  const [previewURL, setPreviewURL] = useState(
+    process.env.PUBLIC_URL + `/images/user${id > 10 ? id - 10 : id}.jpg`
+  );
+  const fileRef = useRef();
+  const handleFileOnChange = (event) => {
+    event.preventDefault();
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.onloadend = (e) => {
+      setFile(file);
+      setPreviewURL(reader.result);
+    };
+    if (file) reader.readAsDataURL(file);
+  };
+  const handleFileClick = (event) => {
+    event.preventDefault();
+    fileRef.current.click();
+  };
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit}>
         <div className={styles.imgBox}>
-          <img
-            src={
-              process.env.PUBLIC_URL +
-              `/images/user${id > 10 ? id - 10 : id}.jpg`
-            }
-            alt=""
-          />
+          <img src={previewURL} alt="" />
         </div>
         <article className={styles.article}>
           <div className={styles.desc}>
@@ -56,6 +68,18 @@ export default () => {
             <span>You can subscribe us</span>
           </div>
           <h3>Enroll / Revise</h3>
+          <div className="fileBox">
+            <div className="previewImg">
+              <img src={previewURL} />
+              <button onClick={handleFileClick}>Edit</button>
+            </div>
+            <input
+              type="file"
+              hidden={true}
+              ref={fileRef}
+              onChange={handleFileOnChange}
+            />
+          </div>
           <div className={styles.inputBox}>
             <input
               type="text"

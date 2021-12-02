@@ -1,5 +1,4 @@
-import AlbumItem from "components/Albums/AlbumItem";
-
+import AlbumItem from "./AlbumItem";
 import Loading from "components/Common/Loading";
 import styles from "./Albums.module.css";
 import useFetch from "hooks/useAsync";
