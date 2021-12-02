@@ -50,7 +50,30 @@ color: #555;
             }
         }
     }
+    .fileBox{
+        width: 500px;
+        height: 300px;
+        border: 1px solid black;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        position: relative;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
 
+        }
+        button{
+            position: absolute;
+            background-color:#2f3640;
+            color: #fff;
+            padding: 0.5em 3em;
+            bottom:1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+        }
+    }
     button{
         border:0;
         display: inline-block;
