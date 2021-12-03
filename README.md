@@ -1,4 +1,4 @@
-# :gem: Users Project Using Placeholder Dummy data
+# :gem: Users Project Using Placeholder Dummy data / 211203 수정
 
 ## 🔸 Desciption
 
@@ -14,6 +14,8 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
     "react-router-dom": "^6.0.2",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
+    "lodash": "^4.17.21",
+    "zustand": "^3.6.5"
   },
 ```
 
@@ -28,6 +30,11 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 - styled-components 안에는 클래스네임을 넣으며 scss처럼 사용할 수 있다.
 - `name.module.css`를 사용할때는 `styles`를 import 해서 사용해야 한다.
 
+🔹 zustand
+
+- 전역 state 관리 라이브러리로 zustand 사용함.
+- [zustand 공식 깃허브] : https://github.com/pmndrs/zustand
+
 ## 🔸 Config
 
 ### 🔹public
@@ -41,30 +48,20 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
   - `ScrollToTop.js`
   - `validator.js`
 - `components`
-  - `AlbumItem.js`
-  - `Btn.js`
-  - `CommentItem.js`
-  - `Error.js`
-  - `Footer.js`
-  - `GlobalStyles.js`
-  - `Header.js`
-  - `Loading.js`
-  - `PhotoItem.js`
-  - `PostItem.js`
-  - `TodoItem.js`
-  - `UserItem.js`
-- `context`
-  - `UserAction.js`
-  - `UserContext.js`
-  - `UserState.js`
+  - `Common`
+    - `Btn.js` / `Error.js` / `Footer.js` / `GlobalStyles.js` / `Loading.js` / `Pagination.js`
+  - `Header`
+    - `Navigation.js` / `Header.js`
 - `hooks`
   - `useAsync.js`
   - `useInput.js`
   - `useModal.js`
+  - `usePagination.js`
+  - `useLockBodyScroll.js`
+  - `useFileImage.js`
 - `pages`
   - `Home`
-    - `directory name.module.css`
-    - `index.js`
+    - `directory name.module.css` / `index.js` / `componentsName.js (It is only to use in directory)`
   - `Albums`
   - `Edit`
   - `Posts`
@@ -73,7 +70,12 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
   - `UserDetail`
 - `portal`
   - `Modal.js`
-  - `Portal.js`
+  - `DeleteModal.js`
+  - `UpdateModal.js`
+  - `AlbumModal.js`
+- `store`
+  - `default.js`
+  - `posts.js`
 - `App.js`
 - `index.js`
 
@@ -83,153 +85,14 @@ Placeholder 에서 제공하는 더미데이터를 이용하여, 데이터를 �
 
 - Users / method : `GET`
 
-### 🔹 Request Api Data
+### 🔹 Request Api Data (211203 수정사항 : api 전송 => 전역 데이터에서 관리)
+
+이전 코드에서는 API 전송 했으나, 전역 데이터를 이용해 update, delete, update하는걸로 바뀜.
+(94e1d0e9481984815c23c6d9bb79bf4e77782bb2 커밋내용 참조)
 
 - Delete / method : `DELETE` / query : `false`
 - Create / method : `PUT` / query : `true`
 - Update / method : `POST` / query : `true`
-
-## 🔸 Explanation
-
-### 🔹 index.js
-
-- 전역 State Provider 설정
-- Route 감싸는 Router 설정
-
-### 🔹 App.js
-
-- useEffect로 mount 될 때 전체데이터 받아와서 전역 state에 담음.
-
-### 🔹 Common
-
-#### ◾ ScrollTop.js
-
-- 페이지 이동이 있을 때마다 pathname만 바뀌고 스크롤은 그 위치에 있어서, scrollTop을 0으로 만들어주는 함수.
-
-#### ◾ validator.js
-
-- Edit.js / Signup.js 부분에 인풋 유효성에 필요한 유효성 함수.
-
-### 🔹 components
-
-#### ◾ GlobalStyles.js
-
-- 전역에 사용할 CSS 컴포넌트 `by styled-reset`
-
-#### ◾ Header.js / Footer.js
-
-- 해더 / 푸터 컴포넌트
-
-#### ◾ Loading.js / Error.js
-
-- 로딩 / 애러일 때 보여주는 컴포넌트
-
-#### ◾ Btn.js
-
-- 공통으로 들어가는 DeleteBtn, ReviseBtn 각각 export 해줌.
-- DeleteBtn : `param= id , api, onDelete` `api=true`이면 api전송, false면 onDelete 실행
-- ReviseBtn : `param= id, url, onCreateLocal ` 이면 url 이동
-
-#### ◾ UserItem.js
-
-- Parent : `pages/UserDetail/index.js`
-- Parameter : `user,onDelete`
-- execute api : `false`
-
-#### ◾ PostItem.js
-
-- Parent : `pages/Post/index.js`
-- Parameter : `post`
-- execute api : `true`
-
-#### ◾ CommentItem.js
-
-- Parent : `./PostItem.js`
-- Parameter : `isCheck, comment`
-- execute api : `false`
-
-#### ◾ TodoItem.js
-
-- Parent : `pages/Todos/index.js`
-- Parameter : `todo`
-- execute api : `false`
-
-#### ◾ AlbumItem.js
-
-- Parent : `Albums/index.js`
-- Parameter : `album`
-- execute api : `true`
-
-#### ◾ PhotoItem.js
-
-- Parent : `./AlbumItem.js`
-- Parameter : `photo`
-- execute api : `false`
-
-### 🔹 pages
-
-#### ◾ Home
-
-- 전역 state로 데이터 받아와서 뿌려줌.
-- LocalStorage Clear
-- 검색기능
-- 유저카드 클릭하면 해당 유저카드 삭제
-
-#### ◾ UserDetail
-
-- LocalStorage에서 데이터 받아와서 뿌려줌.
-- Delete,Revise Btn prop으로 id 전달
-
-#### ◾ Edit / Signup
-
-- useInput사용해서 state에 input값 저장.
-- validator로 유효성 검사
-- 유효성 성공하면 data전송
-- Signup : params로 id 받아와서 find 함수로 데이터 매칭시켜 username default value로 설정
-
-#### ◾ Posts / Todos / Albums
-
-- useParams()로 id받아와서 api 전송해서 데이터 뿌리기.
-
-### 🔹 hooks
-
-#### ◾ useAsync.js
-
-- data 전송, 성공/실패 여부 받아오는 custom hook
-
-#### ◾ useInput.js
-
-- input value, onChange 처리하는 input custom hook
-
-#### ◾ useModal.js
-
-- 모달 띄울때 사용하는 Boolean 사용하는 modal custom hook
-
-### 🔹 portal
-
-#### ◾ portal.js
-
-- createPortal로 root외 다른 element 사용가능하게 하는 modal portal js
-
-#### ◾ Modal.js
-
-- Album / Alert 모달 컴포넌트
-
-### 🔹 context
-
-#### ◾ UserContext.js
-
-- createContext설정
-- reducer 함수
-
-#### ◾ UserAction.js
-
-- context state에 담는 action 함수
-
-#### ◾ UserState.js
-
-- initial data 설정
-- useReducer 로 state, dispatch 불러와 Provider에게 전달.
 
 ### ➕ CSS
 
