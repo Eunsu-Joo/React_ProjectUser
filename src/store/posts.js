@@ -5,6 +5,7 @@ import create from "zustand";
 const store = devtools(
   (set, get) => ({
     posts: [],
+    newPosts: [],
     isLoading: true,
     error: null,
     fetchPosts: async (id) => {
