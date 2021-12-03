@@ -29,15 +29,17 @@ const iconStyle = {
   cursor: `pointer`,
   fontSize: `26px`,
 };
-const UpdateModal = ({ onClose, children, id, data, enroll }) => {
-  const { create, update } = useStore((state) => state);
+const UpdateModal = ({ onClose, children, id, data, enroll, imgUrl }) => {
+  const { create, update, updateImg } = useStore((state) => state);
   const navigator = useNavigate();
   const onUpdate = () => {
     if (enroll) {
-      create(data);
+      create(data, imgUrl);
     } else {
       update(data, id);
+      updateImg(id, imgUrl);
     }
+
     window.localStorage.clear();
     navigator("/");
   };
