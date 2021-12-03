@@ -55,7 +55,7 @@ const User = styled.div`
 `;
 
 export default ({ user }) => {
-  const { name, username, email, website, phone, id } = user;
+  const { name, username, email, website, phone, id, img } = user;
   const navigator = useNavigate();
   const onCreateLocal = () => {
     window.localStorage.setItem(`user`, JSON.stringify(user));
@@ -68,12 +68,7 @@ export default ({ user }) => {
   return (
     <User>
       <div className="imgBox" onClick={handleClick}>
-        <img
-          src={
-            process.env.PUBLIC_URL + `/images/user${id > 10 ? id - 10 : id}.jpg`
-          }
-          alt=""
-        />
+        <img src={img} alt="" />
       </div>
       <h3>
         {name} / {username}

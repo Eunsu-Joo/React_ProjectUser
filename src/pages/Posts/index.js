@@ -1,13 +1,11 @@
 import styles from "./Posts.module.css";
 import { useLocation, useNavigate, useParams } from "react-router";
-import useFetch from "hooks/useAsync";
 import Error from "components/Common/Error";
 import Loading from "components/Common/Loading";
 import PostItem from "./PostItem";
 import postsStore from "store/posts";
-import { useCallback } from "react";
 import AddPosts from "./AddPosts";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect } from "react";
 
 export default () => {
   const { id } = useParams();
@@ -17,6 +15,8 @@ export default () => {
   const handlePostPage = () => {
     navigator(`/posts/${id}/new`);
   };
+  // newPost(업데이트된 게시물)가 있으면 newPost를 보여주고
+  // newPost가 비어있으면 post를 보여줘라.
   useEffect(() => fetchPosts(id), []);
   return (
     <>

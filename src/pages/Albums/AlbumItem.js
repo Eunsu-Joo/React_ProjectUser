@@ -4,6 +4,7 @@ import axios from "axios";
 import useModal from "hooks/useModal";
 import PhotoItem from "./PhotoItem";
 import AlbumModal from "portal/AlnumModal";
+
 const AlbumItem = styled.div`
   cursor: pointer;
   position: relative;
@@ -52,6 +53,7 @@ export default ({ data }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { open, onOpenModal, closeModal } = useModal();
+  const { img } = JSON.parse(window.localStorage.getItem(`user`));
   const handleClick = () => {
     onOpenModal(!open);
     if (isSend) return false;
@@ -71,10 +73,7 @@ export default ({ data }) => {
     <>
       <AlbumItem onClick={handleClick}>
         <div className="imgBox">
-          <img
-            src={process.env.PUBLIC_URL + `/images/user${userId}.jpg`}
-            alt=""
-          />
+          <img src={img} alt="" />
         </div>
         <div className="desc">
           <h3>

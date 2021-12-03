@@ -1,22 +1,15 @@
 import styles from "./User.module.css";
 import { DeleteBtn, ReviseBtn } from "components/Common/Btn";
-import { useNavigate } from "react-router";
-import postsStore from "store/posts";
+
 export default () => {
   const user = JSON.parse(window.localStorage.getItem(`user`));
-  const { name, username, phone, email, website, id } = user;
+  const { name, username, phone, email, website, id, img } = user;
 
   return (
     <section className={styles.container}>
       <article className={styles.userContainer}>
         <div className={styles.imgBox}>
-          <img
-            src={
-              process.env.PUBLIC_URL +
-              `/images/user${user.id > 10 ? id - 10 : user.id}.jpg`
-            }
-            alt=""
-          />
+          <img src={img} alt="" />
         </div>
         <div className={styles.descBox}>
           <h2>

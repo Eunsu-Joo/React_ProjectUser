@@ -5,6 +5,7 @@ import useInput from "hooks/useInput";
 import validator from "common/validator";
 import useStore from "store/default";
 import UpdateModal from "portal/UpdateModal";
+import useFileImage from "hooks/useFileImage";
 export default () => {
   const { open, onOpenModal, closeModal } = useModal();
   const [error, setError] = useState(null);
@@ -16,7 +17,7 @@ export default () => {
     email: "",
   });
   let { formValid, errors } = validator(data);
-  const { data: users } = useStore((state) => state);
+  const { data: users, img: imgUrl } = useStore((state) => state);
   const usernames = users.map((user) => user.username);
   const ref = useRef();
   const onCheckUser = () => {
@@ -52,7 +53,11 @@ export default () => {
       return onOpenModal(!open);
     }
   };
-
+  const fileRef = useRef();
+  const { previewURL, handleFileClick, handleFileOnChange } = useFileImage(
+    fileRef,
+    imgUrl
+  );
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit}>
@@ -70,6 +75,21 @@ export default () => {
             <span>You can subscribe us</span>
           </div>
           <h3>Enroll / Revise</h3>
+          <div
+            className="fileBox"
+            style={{ backgroundColor: `${previewURL ? `none` : `#dfe6e9`}` }}
+          >
+            <div className="previewImg">
+              <img src={previewURL} />
+              <button onClick={handleFileClick}>Edit</button>
+            </div>
+            <input
+              type="file"
+              hidden={true}
+              ref={fileRef}
+              onChange={handleFileOnChange}
+            />
+          </div>
           <div className={styles.inputBox}>
             <input
               type="text"
@@ -125,7 +145,12 @@ export default () => {
           </div>
         </article>
         {open && (
-          <UpdateModal onClose={closeModal} data={data} enroll={true}>
+          <UpdateModal
+            onClose={closeModal}
+            data={data}
+            enroll={true}
+            imgUrl={previewURL}
+          >
             Are you shall create your account?
           </UpdateModal>
         )}

@@ -2,21 +2,21 @@ import styles from "./Edit.module.css";
 import { ReviseBtn } from "components/Common/Btn";
 import { useParams } from "react-router";
 import useInput from "hooks/useInput";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import useModal from "hooks/useModal";
 import validator from "common/validator";
 import useStore from "store/default";
 import UpdateModal from "portal/UpdateModal";
+import useFileImage from "hooks/useFileImage";
 
 export default () => {
   const { open, onOpenModal, closeModal } = useModal();
   const { data: users } = useStore((state) => state);
   const [error, setError] = useState(null);
   const { id } = useParams();
-  const { username: currentUser } = users.find(
+  const { username: currentUser, img: imgUrl } = users.find(
     (user) => user.id === parseInt(id)
   );
-
   const [data, onChange] = useInput({
     name: "",
     username: currentUser,
@@ -32,30 +32,22 @@ export default () => {
       onOpenModal(!open);
     }
   };
-  const [file, setFile] = useState("");
-  const [previewURL, setPreviewURL] = useState(
-    process.env.PUBLIC_URL + `/images/user${id > 10 ? id - 10 : id}.jpg`
-  );
   const fileRef = useRef();
-  const handleFileOnChange = (event) => {
-    event.preventDefault();
-    let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.onloadend = (e) => {
-      setFile(file);
-      setPreviewURL(reader.result);
-    };
-    if (file) reader.readAsDataURL(file);
-  };
-  const handleFileClick = (event) => {
-    event.preventDefault();
-    fileRef.current.click();
-  };
+  const { previewURL, handleFileClick, handleFileOnChange } = useFileImage(
+    fileRef,
+    imgUrl
+  );
   return (
     <section className="container">
       <form action="" autoComplete="off" onSubmit={handleSubmit}>
         <div className={styles.imgBox}>
-          <img src={previewURL} alt="" />
+          <img
+            src={
+              process.env.PUBLIC_URL +
+              `/images/user${id > 10 ? id - 10 : id}.jpg`
+            }
+            alt=""
+          />
         </div>
         <article className={styles.article}>
           <div className={styles.desc}>
@@ -134,7 +126,12 @@ export default () => {
         </article>
       </form>
       {open && (
-        <UpdateModal onClose={closeModal} id={id} data={data}>
+        <UpdateModal
+          onClose={closeModal}
+          id={id}
+          data={data}
+          imgUrl={previewURL}
+        >
           Are you shall update your information?
         </UpdateModal>
       )}
