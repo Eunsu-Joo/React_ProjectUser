@@ -53,7 +53,6 @@ color: #555;
     .fileBox{
         width: 500px;
         height: 300px;
-        border: 1px solid black;
         margin-bottom: 1rem;
         overflow: hidden;
         position: relative;
