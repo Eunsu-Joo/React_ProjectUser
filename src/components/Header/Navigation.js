@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TiUserOutline } from "react-icons/ti";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 const Gnb = styled.ul`
   width: 400px;
